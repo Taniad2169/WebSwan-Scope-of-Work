@@ -146,7 +146,7 @@
         
         .miscellaneous-comment-container,
         .custom-price-container,
-        .Additional-comment-container {
+        .monthly-custom-container {
             display: none;
             margin-top: 15px;
         }
@@ -354,19 +354,13 @@
                                     $799 Ad campaign video with a website
                                 </label>
                             </div>
-                            <div class="checkbox-group" style="margin-top: 15px;">
-                                <label>
-                                    <input type="checkbox" id="miscellaneous-checkbox">
-                                    Miscellaneous
-                                </label>
-                            </div>
                         </div>
-                        <div id="miscellaneous-comment-container" class="miscellaneous-comment-container">
-                            <div class="form-group">
-                                <label for="miscellaneous-comment">Miscellaneous Comments (1000-word capacity):</label>
-                                <textarea id="miscellaneous-comment" name="miscellaneous-comment" rows="6" maxlength="500"></textarea>
-                            </div>
+                        
+                        <div class="form-group">
+                            <label for="miscellaneous-amount">Miscellaneous Amount:</label>
+                            <input type="number" id="miscellaneous-amount" name="miscellaneous-amount" class="auto-resize" placeholder="$" min="0">
                         </div>
+                        
                         <div class="form-group">
                             <label for="reputation-management">Reputation management</label>
                             <select id="reputation-management" name="reputation-management" class="auto-resize">
@@ -376,18 +370,35 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="reputation-comment">Reputation Management Comments (1000-word capacity):</label>
-                            <textarea id="reputation-comment" name="reputation-comment" rows="10" maxlength="1000"></textarea>
+                            <label for="additional-comments">Additional Comments (1000-word capacity):</label>
+                            <textarea id="additional-comments" name="additional-comments" rows="10" maxlength="1000"></textarea>
                         </div>
                         <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="monthly-payment" value="69">
-                                Monthly payment for hosting security and maintenance $69
-                            </label>
+                            <label for="monthly-payment">Monthly payment for hosting security and maintenance</label>
+                            <select id="monthly-payment" name="monthly-payment" class="auto-resize">
+                                <option value="0">N/A</option>
+                                <option value="69">$69</option>
+                                <option value="99">$99</option>
+                                <option value="109">$109</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div id="monthly-custom-container" class="monthly-custom-container">
+                            <div class="form-group">
+                                <label for="monthly-custom-amount">Enter Custom Amount:</label>
+                                <input type="number" id="monthly-custom-amount" name="monthly-custom-amount" class="auto-resize" placeholder="$" min="0">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="total-amount">Total Due</label>
-                            <input type="text" id="total-amount" name="total-amount" class="auto-resize" placeholder="Amount will auto-populate" readonly>
+                            <input type="text" id="total-amount" name="total-amount" class="auto-resize" placeholder="Amount will auto-populate">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="paid-today-checkbox">
+                                Amount to be paid today:
+                            </label>
+                            <input type="number" id="paid-today-amount" name="paid-today-amount" class="auto-resize" placeholder="$" min="0" readonly>
                         </div>
                         <div class="btn-row">
                             <button type="button" class="btn btn-primary" id="save-btn-data">Save Data</button>
@@ -462,12 +473,15 @@
         const addons = document.querySelectorAll('input[name="addons"]');
         const videoAddons = document.querySelectorAll('input[name="video-addons"]');
         const reputationManagement = document.getElementById('reputation-management');
-        const monthlyPayment = document.querySelector('input[name="monthly-payment"]');
+        const monthlyPayment = document.getElementById('monthly-payment');
+        const monthlyCustomContainer = document.getElementById('monthly-custom-container');
+        const monthlyCustomAmountInput = document.getElementById('monthly-custom-amount');
+        const miscellaneousAmountInput = document.getElementById('miscellaneous-amount');
         const totalAmountInput = document.getElementById('total-amount');
+        const paidTodayCheckbox = document.getElementById('paid-today-checkbox');
+        const paidTodayAmountInput = document.getElementById('paid-today-amount');
         const saveBtnData = document.getElementById('save-btn-data');
         const printBtn = document.getElementById('print-btn');
-        const miscellaneousCheckbox = document.getElementById('miscellaneous-checkbox');
-        const miscellaneousCommentContainer = document.getElementById('miscellaneous-comment-container');
 
         // Signature Pad Elements
         const agreeCheckbox = document.getElementById('agreeCheckbox');
@@ -478,47 +492,51 @@
         let isDrawing = false;
         let lastX = 0;
         let lastY = 0;
-
-        let isManualEntry = false;
         
+        function getInputValue(inputElement) {
+            let value = parseFloat(inputElement.value);
+            return isNaN(value) ? 0 : value;
+        }
+
         function calculateTotal() {
-            if (isManualEntry) {
-                return;
-            }
-            
             let total = 0;
             
-            // Get project type or custom amount
+            // Project Amount
             const selectedProjectType = projectType.value;
             if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer') {
-                total += parseFloat(customPriceInput.value) || 0;
+                total += getInputValue(customPriceInput);
             } else {
                 total += parseInt(selectedProjectType) || 0;
             }
 
-            // Add selected addons
+            // Additional Selections
             addons.forEach(checkbox => {
                 if (checkbox.checked) {
                     total += parseInt(checkbox.value) || 0;
                 }
             });
 
-            // Add selected video addon
             videoAddons.forEach(radio => {
                 if (radio.checked) {
                     total += parseInt(radio.value) || 0;
                 }
             });
+            
+            // Miscellaneous Amount
+            total += getInputValue(miscellaneousAmountInput);
 
-            // Add reputation management value
+            // Reputation Management
             total += parseInt(reputationManagement.value) || 0;
 
-            // Add monthly payment if checked
-            if (monthlyPayment.checked) {
-                total += parseInt(monthlyPayment.value) || 0;
+            // Monthly Payment
+            const selectedMonthlyPayment = monthlyPayment.value;
+            if (selectedMonthlyPayment === 'other') {
+                total += getInputValue(monthlyCustomAmountInput);
+            } else {
+                total += parseInt(selectedMonthlyPayment) || 0;
             }
 
-            totalAmountInput.value = `$${total}`;
+            totalAmountInput.value = `$${total.toFixed(2)}`;
         }
 
         // Listen for changes on all relevant inputs
@@ -527,7 +545,6 @@
                 customPriceContainer.style.display = 'block';
             } else {
                 customPriceContainer.style.display = 'none';
-                customPriceInput.value = '';
             }
             calculateTotal();
         });
@@ -535,23 +552,24 @@
         addons.forEach(checkbox => checkbox.addEventListener('change', calculateTotal));
         videoAddons.forEach(radio => radio.addEventListener('change', calculateTotal));
         reputationManagement.addEventListener('change', calculateTotal);
-        monthlyPayment.addEventListener('change', calculateTotal);
-        
-        // Listen for change on the miscellaneous checkbox
-        miscellaneousCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                miscellaneousCommentContainer.style.display = 'block';
-            } else {
-                miscellaneousCommentContainer.style.display = 'none';
-            }
-        });
+        miscellaneousAmountInput.addEventListener('input', calculateTotal);
 
-        // Handle manual input on total amount field
-        totalAmountInput.addEventListener('input', () => {
-            isManualEntry = true;
+        monthlyPayment.addEventListener('change', () => {
+            if (monthlyPayment.value === 'other') {
+                monthlyCustomContainer.style.display = 'block';
+            } else {
+                monthlyCustomContainer.style.display = 'none';
+            }
+            calculateTotal();
         });
-        totalAmountInput.addEventListener('blur', () => {
-            isManualEntry = false;
+        monthlyCustomAmountInput.addEventListener('input', calculateTotal);
+
+        paidTodayCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                paidTodayAmountInput.removeAttribute('readonly');
+            } else {
+                paidTodayAmountInput.setAttribute('readonly', 'true');
+            }
         });
 
         saveBtnData.addEventListener('click', async () => {
@@ -575,15 +593,16 @@
             }
 
             data['total-due'] = totalAmountInput.value;
+            data['amount-paid-today'] = paidTodayAmountInput.value;
             data['timestamp'] = new Date();
 
             try {
                 const docRef = await addDoc(collection(db, "projects"), data);
-                alert("Form data saved to Firestore! Document ID: " + docRef.id);
+                // alert("Form data saved to Firestore! Document ID: " + docRef.id);
                 console.log("Document written with ID: ", docRef.id);
             } catch (e) {
                 console.error("Error adding document: ", e);
-                alert("Error saving data. Check the console for details.");
+                // alert("Error saving data. Check the console for details.");
             }
         });
         
@@ -603,7 +622,7 @@
 
         signaturePad.addEventListener('mousedown', (e) => {
             if (signaturePad.classList.contains('disabled')) {
-                alert('Please agree to the terms and conditions first.');
+                // alert('Please agree to the terms and conditions first.');
                 return;
             }
             isDrawing = true;
@@ -628,7 +647,7 @@
 
         saveBtn.addEventListener('click', () => {
             const signatureData = signaturePad.toDataURL();
-            alert('Signature data saved successfully!');
+            // alert('Signature data saved successfully!');
             console.log(signatureData); // For demonstration
         });
 
