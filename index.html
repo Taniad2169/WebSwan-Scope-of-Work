@@ -264,6 +264,22 @@
             cursor: pointer;
             font-size: 16px;
         }
+
+        /* Added for Miscellaneous Amount Input */
+        .miscellaneous-input-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .miscellaneous-input-group label {
+            margin-bottom: 0;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .miscellaneous-input-group input[type="number"] {
+            flex-grow: 1;
+        }
     </style>
 </head>
 <body>
@@ -358,9 +374,13 @@
                                     <input type="checkbox" id="miscellaneous-checkbox">
                                     Miscellaneous
                                 </label>
+                                <div id="miscellaneous-input-group" class="miscellaneous-input-group" style="display: none;">
+                                    <label for="miscellaneous-amount">Amount:</label>
+                                    <input type="number" id="miscellaneous-amount" name="miscellaneous-amount" placeholder="$" min="0">
+                                </div>
                             </div>
                         </div>
-                        <div id="miscellaneous-comment-container" class="miscellaneous-comment-container">
+                        <div id="miscellaneous-comment-container" class="miscellaneous-comment-container" style="display: none;">
                             <div class="form-group">
                                 <label for="miscellaneous-comment">Miscellaneous Comments (1000-word capacity):</label>
                                 <textarea id="miscellaneous-comment" name="miscellaneous-comment" rows="6" maxlength="1000"></textarea>
@@ -473,6 +493,8 @@
         const printBtn = document.getElementById('print-btn');
         const miscellaneousCheckbox = document.getElementById('miscellaneous-checkbox');
         const miscellaneousCommentContainer = document.getElementById('miscellaneous-comment-container');
+        const miscellaneousAmountInput = document.getElementById('miscellaneous-amount'); // New
+        const miscellaneousInputGroup = document.getElementById('miscellaneous-input-group'); // New
 
         // Signature Pad Elements
         const agreeCheckbox = document.getElementById('agreeCheckbox');
@@ -515,6 +537,11 @@
                 }
             });
 
+            // Add miscellaneous amount if checkbox is checked
+            if (miscellaneousCheckbox.checked) {
+                total += parseFloat(miscellaneousAmountInput.value) || 0;
+            }
+
             // Add reputation management value
             total += parseInt(reputationManagement.value) || 0;
 
@@ -523,7 +550,7 @@
                 total += parseInt(monthlyPayment.value) || 0;
             }
 
-            totalAmountInput.value = `$${total}`;
+            totalAmountInput.value = `$${total.toFixed(2)}`; // Ensure two decimal places
         }
 
         // Listen for changes on all relevant inputs
@@ -546,10 +573,17 @@
         miscellaneousCheckbox.addEventListener('change', function() {
             if (this.checked) {
                 miscellaneousCommentContainer.style.display = 'block';
+                miscellaneousInputGroup.style.display = 'flex'; // Show the amount input
             } else {
                 miscellaneousCommentContainer.style.display = 'none';
+                miscellaneousInputGroup.style.display = 'none'; // Hide the amount input
+                miscellaneousAmountInput.value = ''; // Clear amount when unchecked
             }
+            calculateTotal(); // Recalculate total when miscellaneous changes
         });
+
+        // Listen for input on the miscellaneous amount
+        miscellaneousAmountInput.addEventListener('input', calculateTotal);
         
         // Listen for change on the new 'Other' checkbox
         otherCheckbox.addEventListener('change', function() {
@@ -591,6 +625,12 @@
             const selectedVideoAddon = Array.from(videoAddons).find(radio => radio.checked);
             if (selectedVideoAddon) {
                 data['video-addons'] = selectedVideoAddon.value;
+            }
+
+            // Include miscellaneous amount if checked
+            if (miscellaneousCheckbox.checked) {
+                data['miscellaneous-amount'] = miscellaneousAmountInput.value;
+                data['miscellaneous-comment'] = document.getElementById('miscellaneous-comment').value;
             }
 
             data['total-due'] = totalAmountInput.value;
