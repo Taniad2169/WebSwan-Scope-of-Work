@@ -251,6 +251,18 @@
             cursor: pointer;
             font-size: 16px;
         }
+        
+        .comment-section {
+            padding: 20px;
+        }
+        
+        .comment-section h2 {
+            color: #14395d;
+            border-bottom: 2px solid #14395d;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -295,7 +307,7 @@
                                 <option value="7999">Ultimate premium plan $7,999</option>
                                 <option value="discounted">Discounted</option>
                                 <option value="specialOffer">Special Offer</option>
-                                <option value="familydiscount"> Family Discount</option>option>
+                                <option value="familydiscount">Family Discount</option>
                             </select>
                         </div>
                         <div id="custom-price-container" class="custom-price-container">
@@ -312,8 +324,8 @@
                             <label>Additional Selections:</label>
                             <div class="checkbox-group">
                                 <label>
-                                    <input type="checkbox" name="addons" value="599" 
-                                        $599 Cookie Accessibility
+                                    <input type="checkbox" name="addons" value="599">
+                                    $599 Cookie and Accessibility Banners
                                 </label>
                                 <label>
                                     <input type="checkbox" name="addons" value="195">
@@ -373,6 +385,12 @@
                                 Monthly payment for hosting security and maintenance $69
                             </label>
                         </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="cookie-monthly" value="29">
+                                Monthly payment for Cookie and Accessibility $29/month
+                            </label>
+                        </div>
 
                         <div class="form-group">
                             <label>
@@ -395,7 +413,7 @@
                 <div class="disclaimer-container">
                     <h2>WebSwan Scope of Work for Web Design Services</h2>
                     <p><strong>1. Project Overview</strong><br>
-                        We begin with a free demo at no cost and with no obligation. This demo requires approximately 15 minutes of your time to review the design and discuss any updates or changes you would like. If you decide not to proceed, you pay nothing. Once the presentation is complete and the website’s core structure and design links are in place, we will collect full payment and continue working to complete the remaining links and content. Please note that at the time of payment, the website’s design and structure will be established, but not all links will yet be fully live. This project involves the design, development, and maintenance of a professional website for [Client's Business]. The website will serve as a platform to showcase Client's Business/Product/Services and engage with potential customers.</p>
+                        We begin with a free demo at no cost and with no obligation. This demo requires approximately 15 minutes of your time to review the design and discuss any updates or changes you would like. If you decide not to proceed, you pay nothing. Once the presentation is complete and the website's core structure and design links are in place, we will collect full payment and continue working to complete the remaining links and content. Please note that at the time of payment, the website's design and structure will be established, but not all links will yet be fully live. This project involves the design, development, and maintenance of a professional website for [Client's Business]. The website will serve as a platform to showcase Client's Business/Product/Services and engage with potential customers.</p>
                     <p><strong>2. Deliverables</strong><br>
                         Custom website design and layout based on client's branding and requirements. Development of responsive website pages optimized for desktop and mobile devices. Integration of essential features such as contact forms, galleries, and social media links, security measures and set up of website hosting.</p>
                     <p><strong>3. Pricing and Payment Terms</strong><br>
@@ -428,6 +446,14 @@
                         Any changes requested after the website is completed and tested will be charged at $75 per edit. (See Paragraph 5 for more details.)</p>
                     <p><strong>Website Design Service Agreement</strong><br>
                         Before we finalize our services, please review the following terms regarding the connection of your domain: <strong>Responsibility for Domain Connection:</strong> Once your website is fully designed, tested, and running smoothly on all devices, it becomes your responsibility to connect your domain to the website domain service. <strong>Assistance Available:</strong> Should you require assistance with connecting your domain, our web designer will be happy to provide guidance and support. This assistance is offered at no additional cost. However, please note that while we offer this assistance as a courtesy, we are not responsible for any actions, errors, or issues caused by third party domain providers. <strong>Limitations of Service:</strong> Our primary role is to design and develop your website to your specifications. Once the design is finalized and the website is operational, our service is considered complete. <strong>Additional Assistance:</strong> While our commitment to customer satisfaction extends to helping you connect your domain, please understand that domain connection is facilitated by a third-party. We will make every effort to assist you, but we cannot control or guarantee the actions or troubleshooting of third-party domain providers. We do not collect or sell your information to third parties. Your information is used solely for communication purposes while we work on your project. For more details, please review our Privacy Policy at <a href="https://www.thewebswan.com/privacy-policy" target="_blank">https://www.thewebswan.com/privacy-policy</a></p>
+                </div>
+                
+                <div class="comment-section">
+                    <h2>Additional Comments</h2>
+                    <div class="form-group">
+                        <label for="general-comment">Comments (1000-word capacity):</label>
+                        <textarea id="general-comment" name="general-comment" rows="6" maxlength="1000" placeholder="Enter any additional comments or notes here..."></textarea>
+                    </div>
                 </div>
             </main>
             <div class="signature-section">
@@ -463,6 +489,7 @@
         const videoAddons = document.querySelectorAll('input[name="video-addons"]');
         const reputationManagement = document.getElementById('reputation-management');
         const monthlyPayment = document.querySelector('input[name="monthly-payment"]');
+        const cookieMonthly = document.querySelector('input[name="cookie-monthly"]');
         const otherCheckbox = document.getElementById('other-checkbox');
         const totalAmountInput = document.getElementById('total-amount');
         const miscellaneousCheckbox = document.getElementById('miscellaneous-checkbox');
@@ -483,7 +510,7 @@
             let total = 0;
             
             const selectedProjectType = projectType.value;
-            if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer') {
+            if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer' || selectedProjectType === 'familydiscount') {
                 total += parseFloat(customPriceInput.value) || 0;
             } else {
                 total += parseInt(selectedProjectType) || 0;
@@ -506,12 +533,16 @@
             if (monthlyPayment.checked) {
                 total += parseInt(monthlyPayment.value) || 0;
             }
+            
+            if (cookieMonthly.checked) {
+                total += parseInt(cookieMonthly.value) || 0;
+            }
 
             totalAmountInput.value = `$${total}`;
         }
 
         projectType.addEventListener('change', () => {
-            if (projectType.value === 'discounted' || projectType.value === 'specialOffer') {
+            if (projectType.value === 'discounted' || projectType.value === 'specialOffer' || projectType.value === 'familydiscount') {
                 customPriceContainer.style.display = 'block';
             } else {
                 customPriceContainer.style.display = 'none';
@@ -524,6 +555,7 @@
         videoAddons.forEach(radio => radio.addEventListener('change', calculateTotal));
         reputationManagement.addEventListener('change', calculateTotal);
         monthlyPayment.addEventListener('change', calculateTotal);
+        cookieMonthly.addEventListener('change', calculateTotal);
         
         miscellaneousCheckbox.addEventListener('change', function() {
             if (this.checked) {
