@@ -105,6 +105,11 @@
             color: #073766;
         }
 
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
         .checkbox-group label,
         .radio-group label {
             display: inline-flex;
@@ -133,6 +138,25 @@
             margin-top: 20px;
             max-height: 400px;
             overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .disclaimer-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .disclaimer-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .disclaimer-container::-webkit-scrollbar-thumb {
+            background: #14395d;
+            border-radius: 4px;
+        }
+
+        .disclaimer-container::-webkit-scrollbar-thumb:hover {
+            background: #0f2b47;
         }
 
         .disclaimer-container h2 {
@@ -222,12 +246,46 @@
             margin-bottom: 20px;
         }
         
+        .comment-container {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .comment-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .comment-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .comment-container::-webkit-scrollbar-thumb {
+            background: #14395d;
+            border-radius: 4px;
+        }
+
+        .comment-container::-webkit-scrollbar-thumb:hover {
+            background: #0f2b47;
+        }
+        
         .monthly-payments-group {
             margin-top: 15px;
             padding: 15px;
             border: 2px solid #14395d;
             border-radius: 8px;
             background-color: #f8f9fa;
+        }
+
+        .word-count {
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -334,7 +392,8 @@
                         <div id="miscellaneous-comment-container" class="miscellaneous-comment-container">
                             <div class="form-group">
                                 <label for="miscellaneous-comment">Miscellaneous Comments (1000-word capacity):</label>
-                                <textarea id="miscellaneous-comment" name="miscellaneous-comment" rows="6" maxlength="1000"></textarea>
+                                <textarea id="miscellaneous-comment" name="miscellaneous-comment" rows="6" placeholder="Enter miscellaneous comments here..."></textarea>
+                                <div class="word-count">Words: <span id="misc-word-count">0</span>/1000</div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -432,9 +491,12 @@
                 
                 <div class="comment-section">
                     <h2>Additional Comments</h2>
-                    <div class="form-group">
-                        <label for="general-comment">Comments (1000-word capacity):</label>
-                        <textarea id="general-comment" name="general-comment" rows="6" maxlength="1000" placeholder="Enter any additional comments or notes here..."></textarea>
+                    <div class="comment-container">
+                        <div class="form-group">
+                            <label for="general-comment">Comments (1000-word capacity):</label>
+                            <textarea id="general-comment" name="general-comment" rows="8" placeholder="Enter any additional comments or notes here..."></textarea>
+                            <div class="word-count">Words: <span id="general-word-count">0</span>/1000</div>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -476,6 +538,10 @@
             const totalAmountInput = document.getElementById('total-amount');
             const miscellaneousCheckbox = document.getElementById('miscellaneous-checkbox');
             const miscellaneousCommentContainer = document.getElementById('miscellaneous-comment-container');
+            const miscellaneousComment = document.getElementById('miscellaneous-comment');
+            const generalComment = document.getElementById('general-comment');
+            const miscWordCount = document.getElementById('misc-word-count');
+            const generalWordCount = document.getElementById('general-word-count');
             const agreeCheckbox = document.getElementById('agreeCheckbox');
             const submitBtn = document.getElementById('submit-btn');
             const acknowledgmentModal = document.getElementById('acknowledgmentModal');
@@ -522,6 +588,27 @@
                 totalAmountInput.value = '$' + total;
             }
 
+            function countWords(text) {
+                return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            }
+
+            function updateWordCount(textarea, counter, maxWords) {
+                const wordCount = countWords(textarea.value);
+                counter.textContent = wordCount;
+                
+                if (wordCount > maxWords) {
+                    counter.style.color = 'red';
+                    // Trim the text to max words
+                    const words = textarea.value.trim().split(/\s+/);
+                    if (words.length > maxWords) {
+                        textarea.value = words.slice(0, maxWords).join(' ');
+                        counter.textContent = maxWords;
+                    }
+                } else {
+                    counter.style.color = '#666';
+                }
+            }
+
             // Event listeners
             projectType.addEventListener('change', function() {
                 if (this.value === 'discounted' || this.value === 'specialOffer' || this.value === 'familydiscount') {
@@ -555,6 +642,16 @@
                 } else {
                     miscellaneousCommentContainer.style.display = 'none';
                 }
+            });
+            
+            // Word count for miscellaneous comments
+            miscellaneousComment.addEventListener('input', function() {
+                updateWordCount(this, miscWordCount, 1000);
+            });
+            
+            // Word count for general comments
+            generalComment.addEventListener('input', function() {
+                updateWordCount(this, generalWordCount, 1000);
             });
             
             otherCheckbox.addEventListener('change', function() {
@@ -599,6 +696,8 @@
                 miscellaneousCommentContainer.style.display = 'none';
                 otherCheckbox.checked = false;
                 customPriceContainer.style.display = 'none';
+                miscWordCount.textContent = '0';
+                generalWordCount.textContent = '0';
                 calculateTotal();
             });
 
