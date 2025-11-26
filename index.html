@@ -18,7 +18,6 @@
             background: white;
             color: #14395d;
             line-height: 1.6;
-            min-height: 100vh;
             padding: 20px;
         }
 
@@ -107,7 +106,7 @@
 
         textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 150px;
         }
 
         .checkbox-group label,
@@ -136,27 +135,8 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
             background-color: #f9f9f9;
-        }
-
-        .disclaimer-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .disclaimer-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .disclaimer-container::-webkit-scrollbar-thumb {
-            background: #14395d;
-            border-radius: 4px;
-        }
-
-        .disclaimer-container::-webkit-scrollbar-thumb:hover {
-            background: #0f2b47;
+            /* Removed max-height for PDF generation */
         }
 
         .disclaimer-container h2 {
@@ -251,26 +231,7 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: #f9f9f9;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .comment-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .comment-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .comment-container::-webkit-scrollbar-thumb {
-            background: #14395d;
-            border-radius: 4px;
-        }
-
-        .comment-container::-webkit-scrollbar-thumb:hover {
-            background: #0f2b47;
+            /* Removed max-height for PDF generation */
         }
         
         .monthly-payments-group {
@@ -286,6 +247,61 @@
             color: #666;
             text-align: right;
             margin-top: 5px;
+        }
+
+        /* Print styles for PDF generation */
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .btn {
+                display: none;
+            }
+            
+            .disclaimer-container,
+            .comment-container {
+                border: 1px solid #000;
+                page-break-inside: avoid;
+            }
+            
+            textarea {
+                border: 1px solid #000;
+                background: white;
+                min-height: 200px;
+            }
+        }
+
+        /* Screen-only styles */
+        @media screen {
+            .disclaimer-container {
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            
+            .disclaimer-container::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .disclaimer-container::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 4px;
+            }
+
+            .disclaimer-container::-webkit-scrollbar-thumb {
+                background: #14395d;
+                border-radius: 4px;
+            }
+
+            .disclaimer-container::-webkit-scrollbar-thumb:hover {
+                background: #0f2b47;
+            }
         }
     </style>
 </head>
@@ -305,6 +321,7 @@
                 <div class="form-section">
                     <h2>Client Information</h2>
                     <form id="project-form" action="https://formspree.io/f/xrbyzwbw" method="POST">
+                        <!-- All your form fields remain the same -->
                         <div class="form-group">
                             <label for="client-name">Project's Name:</label>
                             <input type="text" id="client-name" name="client-name" required>
@@ -392,7 +409,7 @@
                         <div id="miscellaneous-comment-container" class="miscellaneous-comment-container">
                             <div class="form-group">
                                 <label for="miscellaneous-comment">Miscellaneous Comments (1000-word capacity):</label>
-                                <textarea id="miscellaneous-comment" name="miscellaneous-comment" rows="6" placeholder="Enter miscellaneous comments here..."></textarea>
+                                <textarea id="miscellaneous-comment" name="miscellaneous-comment" rows="8" placeholder="Enter miscellaneous comments here..."></textarea>
                                 <div class="word-count">Words: <span id="misc-word-count">0</span>/1000</div>
                             </div>
                         </div>
@@ -507,7 +524,7 @@
                 </div>
                 <div class="signature-controls">
                     <button type="button" class="btn btn-primary" id="submit-btn">Submit</button>
-                    <button type="button" class="btn btn-success" id="print-btn">Print</button>
+                    <button type="button" class="btn btn-success" id="pdf-btn">Generate PDF</button>
                 </div>
             </div>
         </div>
@@ -544,9 +561,9 @@
             const generalWordCount = document.getElementById('general-word-count');
             const agreeCheckbox = document.getElementById('agreeCheckbox');
             const submitBtn = document.getElementById('submit-btn');
+            const pdfBtn = document.getElementById('pdf-btn');
             const acknowledgmentModal = document.getElementById('acknowledgmentModal');
             const modalCloseBtn = document.querySelector('.modal-close');
-            const printBtn = document.getElementById('print-btn');
             const saveBtn = document.getElementById('save-btn-data');
             
             let isManualEntry = false;
@@ -607,6 +624,36 @@
                 } else {
                     counter.style.color = '#666';
                 }
+            }
+
+            // PDF Generation function
+            function generatePDF() {
+                const element = document.querySelector('.container');
+                const opt = {
+                    margin: 10,
+                    filename: 'webswan-agreement.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                // Temporarily remove height restrictions for PDF generation
+                const disclaimerContainer = document.querySelector('.disclaimer-container');
+                const commentContainer = document.querySelector('.comment-container');
+                
+                const originalDisclaimerStyle = disclaimerContainer.style.cssText;
+                const originalCommentStyle = commentContainer.style.cssText;
+                
+                disclaimerContainer.style.maxHeight = 'none';
+                disclaimerContainer.style.overflow = 'visible';
+                commentContainer.style.maxHeight = 'none';
+                commentContainer.style.overflow = 'visible';
+
+                html2pdf().set(opt).from(element).save().then(() => {
+                    // Restore original styles after PDF generation
+                    disclaimerContainer.style.cssText = originalDisclaimerStyle;
+                    commentContainer.style.cssText = originalCommentStyle;
+                });
             }
 
             // Event listeners
@@ -688,7 +735,6 @@
                     return;
                 }
 
-                // Form submission would go here
                 alert('Form submitted successfully!');
                 projectForm.reset();
                 agreeCheckbox.checked = false;
@@ -701,6 +747,8 @@
                 calculateTotal();
             });
 
+            pdfBtn.addEventListener('click', generatePDF);
+
             modalCloseBtn.addEventListener('click', function() {
                 acknowledgmentModal.style.display = 'none';
             });
@@ -709,10 +757,6 @@
                 if (event.target == acknowledgmentModal) {
                     acknowledgmentModal.style.display = 'none';
                 }
-            });
-            
-            printBtn.addEventListener('click', function() {
-                window.print();
             });
             
             saveBtn.addEventListener('click', function() {
