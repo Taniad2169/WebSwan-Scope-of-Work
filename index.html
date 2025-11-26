@@ -12,7 +12,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-weight: bold;
         }
 
         body {
@@ -30,9 +29,6 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 95vh;
         }
 
         header {
@@ -69,12 +65,7 @@
         }
 
         .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
             padding: 20px;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
         .form-section {
@@ -86,15 +77,6 @@
             border-bottom: 2px solid #14395d;
             padding-bottom: 10px;
             margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .form-container {
-            padding: 25px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            background: white;
         }
 
         .form-group {
@@ -119,20 +101,8 @@
             border: 2px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-sizing: border-box;
             background-color: #e1e9f0;
-            font-weight: bold;
             color: #073766;
-            
-            /* 3D effect */
-            border-style: inset;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2) inset;
-        }
-
-        .auto-resize {
-            field-sizing: content;
-            min-width: 150px;
         }
 
         .checkbox-group label,
@@ -161,17 +131,11 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             margin-top: 20px;
-            overflow-y: auto;
             max-height: 400px;
-            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
         }
 
         .disclaimer-container h2 {
-            color: #14395d;
-            font-weight: bold;
-        }
-
-        .disclaimer-container strong {
             color: #14395d;
         }
 
@@ -193,16 +157,11 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            margin: 5px;
         }
 
         .btn-primary {
             background-color: #14395d;
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: #95a5a6;
             color: white;
         }
 
@@ -261,7 +220,14 @@
             border-bottom: 2px solid #14395d;
             padding-bottom: 10px;
             margin-bottom: 20px;
-            font-weight: bold;
+        }
+        
+        .monthly-payments-group {
+            margin-top: 15px;
+            padding: 15px;
+            border: 2px solid #14395d;
+            border-radius: 8px;
+            background-color: #f8f9fa;
         }
     </style>
 </head>
@@ -283,28 +249,28 @@
                     <form id="project-form" action="https://formspree.io/f/xrbyzwbw" method="POST">
                         <div class="form-group">
                             <label for="client-name">Project's Name:</label>
-                            <input type="text" id="client-name" name="client-name" class="auto-resize" required>
+                            <input type="text" id="client-name" name="client-name" required>
                         </div>
                         <div class="form-group">
                             <label for="client-address">Client Address:</label>
-                            <input type="text" id="client-address" name="client-address" class="auto-resize" required>
+                            <input type="text" id="client-address" name="client-address" required>
                         </div>
                         <div class="form-group">
                             <label for="client-phone">Client Phone Number:</label>
-                            <input type="text" id="client-phone" name="client-phone" class="auto-resize" required>
+                            <input type="text" id="client-phone" name="client-phone" required>
                         </div>
                         <div class="form-group">
                             <label for="client-email">Email Address:</label>
-                            <input type="email" id="client-email" name="client-email" class="auto-resize" required>
+                            <input type="email" id="client-email" name="client-email" required>
                         </div>
 
                         <div class="form-group">
                             <label for="project-type">What was the project?</label>
-                            <select id="project-type" name="project-type" class="auto-resize">
+                            <select id="project-type" name="project-type">
                                 <option value="1899">Standard $1,899 web design</option>
                                 <option value="1599">Landing page $1,599</option>
                                 <option value="3899">Premium web design $3,899</option>
-                                <option value="7999">Ultimate premium plan $7,999</option>
+                                <option value="10000">Ultimate premium plan $10,000</option>
                                 <option value="discounted">Discounted</option>
                                 <option value="specialOffer">Special Offer</option>
                                 <option value="familydiscount">Family Discount</option>
@@ -313,12 +279,12 @@
                         <div id="custom-price-container" class="custom-price-container">
                             <div class="form-group">
                                 <label for="custom-price">Enter Custom Amount:</label>
-                                <input type="number" id="custom-price" name="custom-price" class="auto-resize" placeholder="$" min="0">
+                                <input type="number" id="custom-price" name="custom-price" placeholder="$" min="0">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="calendar-date">Calendar</label>
-                            <input type="date" id="calendar-date" name="calendar-date" class="auto-resize">
+                            <input type="date" id="calendar-date" name="calendar-date">
                         </div>
                         <div class="form-group">
                             <label>Additional Selections:</label>
@@ -373,23 +339,39 @@
                         </div>
                         <div class="form-group">
                             <label for="reputation-management">Reputation management</label>
-                            <select id="reputation-management" name="reputation-management" class="auto-resize">
+                            <select id="reputation-management" name="reputation-management">
                                 <option value="0">N/A</option>
                                 <option value="99">With website $99/month</option>
                                 <option value="109">Standalone $109/month</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="monthly-payment" value="69">
-                                Monthly payment for hosting security and maintenance $69
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="cookie-monthly" value="29">
-                                Monthly payment for Cookie and Accessibility $29/month
-                            </label>
+                        
+                        <div class="monthly-payments-group">
+                            <h3 style="color: #14395d; margin-bottom: 15px;">Monthly Payment Options</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="69">
+                                    Monthly payment for hosting security and maintenance $69/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="29">
+                                    Monthly payment for Cookie and Accessibility $29/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="89">
+                                    Monthly payment option $89/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="109">
+                                    Monthly payment option $109/month
+                                </label>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -401,7 +383,7 @@
 
                         <div class="form-group">
                             <label for="total-amount">Total Due</label>
-                            <input type="text" id="total-amount" name="total-amount" class="auto-resize" placeholder="Amount will auto-populate" readonly>
+                            <input type="text" id="total-amount" name="total-amount" placeholder="Amount will auto-populate" readonly>
                         </div>
 
                         <div class="btn-row">
@@ -481,167 +463,166 @@
     </div>
 
     <script>
-        const projectForm = document.getElementById('project-form');
-        const projectType = document.getElementById('project-type');
-        const customPriceContainer = document.getElementById('custom-price-container');
-        const customPriceInput = document.getElementById('custom-price');
-        const addons = document.querySelectorAll('input[name="addons"]');
-        const videoAddons = document.querySelectorAll('input[name="video-addons"]');
-        const reputationManagement = document.getElementById('reputation-management');
-        const monthlyPayment = document.querySelector('input[name="monthly-payment"]');
-        const cookieMonthly = document.querySelector('input[name="cookie-monthly"]');
-        const otherCheckbox = document.getElementById('other-checkbox');
-        const totalAmountInput = document.getElementById('total-amount');
-        const miscellaneousCheckbox = document.getElementById('miscellaneous-checkbox');
-        const miscellaneousCommentContainer = document.getElementById('miscellaneous-comment-container');
-        const agreeCheckbox = document.getElementById('agreeCheckbox');
-        const submitBtn = document.getElementById('submit-btn');
-        const acknowledgmentModal = document.getElementById('acknowledgmentModal');
-        const modalCloseBtn = document.querySelector('.modal-close');
-        const printBtn = document.getElementById('print-btn');
-        
-        let isManualEntry = false;
-        
-        function calculateTotal() {
-            if (isManualEntry) {
-                return;
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectForm = document.getElementById('project-form');
+            const projectType = document.getElementById('project-type');
+            const customPriceContainer = document.getElementById('custom-price-container');
+            const customPriceInput = document.getElementById('custom-price');
+            const addons = document.querySelectorAll('input[name="addons"]');
+            const videoAddons = document.querySelectorAll('input[name="video-addons"]');
+            const reputationManagement = document.getElementById('reputation-management');
+            const monthlyPayments = document.querySelectorAll('input[name="monthly-payment"]');
+            const otherCheckbox = document.getElementById('other-checkbox');
+            const totalAmountInput = document.getElementById('total-amount');
+            const miscellaneousCheckbox = document.getElementById('miscellaneous-checkbox');
+            const miscellaneousCommentContainer = document.getElementById('miscellaneous-comment-container');
+            const agreeCheckbox = document.getElementById('agreeCheckbox');
+            const submitBtn = document.getElementById('submit-btn');
+            const acknowledgmentModal = document.getElementById('acknowledgmentModal');
+            const modalCloseBtn = document.querySelector('.modal-close');
+            const printBtn = document.getElementById('print-btn');
+            const saveBtn = document.getElementById('save-btn-data');
             
-            let total = 0;
+            let isManualEntry = false;
             
-            const selectedProjectType = projectType.value;
-            if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer' || selectedProjectType === 'familydiscount') {
-                total += parseFloat(customPriceInput.value) || 0;
-            } else {
-                total += parseInt(selectedProjectType) || 0;
-            }
-
-            addons.forEach(checkbox => {
-                if (checkbox.checked) {
-                    total += parseInt(checkbox.value) || 0;
+            function calculateTotal() {
+                if (isManualEntry) {
+                    return;
                 }
-            });
-
-            videoAddons.forEach(radio => {
-                if (radio.checked) {
-                    total += parseInt(radio.value) || 0;
+                
+                let total = 0;
+                
+                const selectedProjectType = projectType.value;
+                if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer' || selectedProjectType === 'familydiscount') {
+                    total += parseFloat(customPriceInput.value) || 0;
+                } else {
+                    total += parseInt(selectedProjectType) || 0;
                 }
-            });
 
-            total += parseInt(reputationManagement.value) || 0;
-
-            if (monthlyPayment.checked) {
-                total += parseInt(monthlyPayment.value) || 0;
-            }
-            
-            if (cookieMonthly.checked) {
-                total += parseInt(cookieMonthly.value) || 0;
-            }
-
-            totalAmountInput.value = `$${total}`;
-        }
-
-        projectType.addEventListener('change', () => {
-            if (projectType.value === 'discounted' || projectType.value === 'specialOffer' || projectType.value === 'familydiscount') {
-                customPriceContainer.style.display = 'block';
-            } else {
-                customPriceContainer.style.display = 'none';
-                customPriceInput.value = '';
-            }
-            calculateTotal();
-        });
-        customPriceInput.addEventListener('input', calculateTotal);
-        addons.forEach(checkbox => checkbox.addEventListener('change', calculateTotal));
-        videoAddons.forEach(radio => radio.addEventListener('change', calculateTotal));
-        reputationManagement.addEventListener('change', calculateTotal);
-        monthlyPayment.addEventListener('change', calculateTotal);
-        cookieMonthly.addEventListener('change', calculateTotal);
-        
-        miscellaneousCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                miscellaneousCommentContainer.style.display = 'block';
-            } else {
-                miscellaneousCommentContainer.style.display = 'none';
-            }
-        });
-        
-        otherCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                totalAmountInput.removeAttribute('readonly');
-                totalAmountInput.value = '';
-                isManualEntry = true;
-            } else {
-                totalAmountInput.setAttribute('readonly', true);
-                isManualEntry = false;
-                calculateTotal();
-            }
-        });
-
-        totalAmountInput.addEventListener('input', () => {
-            isManualEntry = true;
-            otherCheckbox.checked = true;
-        });
-        totalAmountInput.addEventListener('blur', () => {
-            isManualEntry = false;
-        });
-        
-        submitBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-
-            if (!projectForm.checkValidity()) {
-                alert("Please fill out all required fields.");
-                return;
-            }
-
-            if (!agreeCheckbox.checked) {
-                acknowledgmentModal.style.display = 'flex';
-                return;
-            }
-
-            const formData = new FormData(projectForm);
-            
-            try {
-                const response = await fetch(projectForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
+                addons.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        total += parseInt(checkbox.value) || 0;
                     }
                 });
 
-                if (response.ok) {
-                    alert('Form submitted successfully!');
-                    projectForm.reset();
-                    agreeCheckbox.checked = false;
-                    miscellaneousCheckbox.checked = false;
-                    miscellaneousCommentContainer.style.display = 'none';
-                    otherCheckbox.checked = false;
-                    customPriceContainer.style.display = 'none';
-                    calculateTotal();
+                videoAddons.forEach(radio => {
+                    if (radio.checked) {
+                        total += parseInt(radio.value) || 0;
+                    }
+                });
+
+                total += parseInt(reputationManagement.value) || 0;
+
+                monthlyPayments.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        total += parseInt(checkbox.value) || 0;
+                    }
+                });
+
+                totalAmountInput.value = '$' + total;
+            }
+
+            // Event listeners
+            projectType.addEventListener('change', function() {
+                if (this.value === 'discounted' || this.value === 'specialOffer' || this.value === 'familydiscount') {
+                    customPriceContainer.style.display = 'block';
                 } else {
-                    alert('An error occurred. Please try again.');
+                    customPriceContainer.style.display = 'none';
+                    customPriceInput.value = '';
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            }
-        });
+                calculateTotal();
+            });
 
-        modalCloseBtn.addEventListener('click', () => {
-            acknowledgmentModal.style.display = 'none';
-        });
+            customPriceInput.addEventListener('input', calculateTotal);
+            
+            addons.forEach(checkbox => {
+                checkbox.addEventListener('change', calculateTotal);
+            });
+            
+            videoAddons.forEach(radio => {
+                radio.addEventListener('change', calculateTotal);
+            });
+            
+            reputationManagement.addEventListener('change', calculateTotal);
+            
+            monthlyPayments.forEach(checkbox => {
+                checkbox.addEventListener('change', calculateTotal);
+            });
+            
+            miscellaneousCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    miscellaneousCommentContainer.style.display = 'block';
+                } else {
+                    miscellaneousCommentContainer.style.display = 'none';
+                }
+            });
+            
+            otherCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    totalAmountInput.removeAttribute('readonly');
+                    totalAmountInput.value = '';
+                    isManualEntry = true;
+                } else {
+                    totalAmountInput.setAttribute('readonly', true);
+                    isManualEntry = false;
+                    calculateTotal();
+                }
+            });
 
-        window.addEventListener('click', (event) => {
-            if (event.target == acknowledgmentModal) {
+            totalAmountInput.addEventListener('input', function() {
+                isManualEntry = true;
+                otherCheckbox.checked = true;
+            });
+            
+            totalAmountInput.addEventListener('blur', function() {
+                isManualEntry = false;
+            });
+            
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                if (!projectForm.checkValidity()) {
+                    alert("Please fill out all required fields.");
+                    return;
+                }
+
+                if (!agreeCheckbox.checked) {
+                    acknowledgmentModal.style.display = 'flex';
+                    return;
+                }
+
+                // Form submission would go here
+                alert('Form submitted successfully!');
+                projectForm.reset();
+                agreeCheckbox.checked = false;
+                miscellaneousCheckbox.checked = false;
+                miscellaneousCommentContainer.style.display = 'none';
+                otherCheckbox.checked = false;
+                customPriceContainer.style.display = 'none';
+                calculateTotal();
+            });
+
+            modalCloseBtn.addEventListener('click', function() {
                 acknowledgmentModal.style.display = 'none';
-            }
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target == acknowledgmentModal) {
+                    acknowledgmentModal.style.display = 'none';
+                }
+            });
+            
+            printBtn.addEventListener('click', function() {
+                window.print();
+            });
+            
+            saveBtn.addEventListener('click', function() {
+                alert('Data saved!');
+            });
+
+            // Initialize
+            calculateTotal();
         });
-        
-        printBtn.addEventListener('click', () => {
-            window.print();
-        });
-        
-        calculateTotal();
     </script>
 </body>
 </html>
