@@ -136,7 +136,6 @@
             border-radius: 10px;
             margin-top: 20px;
             background-color: #f9f9f9;
-            /* Removed max-height for PDF generation */
         }
 
         .disclaimer-container h2 {
@@ -231,7 +230,6 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: #f9f9f9;
-            /* Removed max-height for PDF generation */
         }
         
         .monthly-payments-group {
@@ -249,36 +247,7 @@
             margin-top: 5px;
         }
 
-        /* Print styles for PDF generation */
-        @media print {
-            body {
-                padding: 0;
-                background: white;
-            }
-            
-            .container {
-                box-shadow: none;
-                border-radius: 0;
-            }
-            
-            .btn {
-                display: none;
-            }
-            
-            .disclaimer-container,
-            .comment-container {
-                border: 1px solid #000;
-                page-break-inside: avoid;
-            }
-            
-            textarea {
-                border: 1px solid #000;
-                background: white;
-                min-height: 200px;
-            }
-        }
-
-        /* Screen-only styles */
+        /* Screen-only styles with scrolling */
         @media screen {
             .disclaimer-container {
                 max-height: 400px;
@@ -302,6 +271,82 @@
             .disclaimer-container::-webkit-scrollbar-thumb:hover {
                 background: #0f2b47;
             }
+            
+            .comment-container {
+                max-height: 300px;
+                overflow-y: auto;
+            }
+            
+            .comment-container::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .comment-container::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 4px;
+            }
+
+            .comment-container::-webkit-scrollbar-thumb {
+                background: #14395d;
+                border-radius: 4px;
+            }
+
+            .comment-container::-webkit-scrollbar-thumb:hover {
+                background: #0f2b47;
+            }
+        }
+
+        /* Print/PDF styles - NO height restrictions */
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .btn {
+                display: none;
+            }
+            
+            .disclaimer-container,
+            .comment-container {
+                border: 1px solid #000;
+                page-break-inside: avoid;
+                max-height: none !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            
+            textarea {
+                border: 1px solid #000;
+                background: white;
+                min-height: 200px;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            
+            /* Ensure all content is visible in PDF */
+            .disclaimer-container,
+            .comment-container,
+            textarea {
+                max-height: none !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+        }
+
+        /* PDF-specific class to remove all restrictions */
+        .pdf-mode .disclaimer-container,
+        .pdf-mode .comment-container,
+        .pdf-mode textarea {
+            max-height: none !important;
+            height: auto !important;
+            overflow: visible !important;
         }
     </style>
 </head>
@@ -321,7 +366,6 @@
                 <div class="form-section">
                     <h2>Client Information</h2>
                     <form id="project-form" action="https://formspree.io/f/xrbyzwbw" method="POST">
-                        <!-- All your form fields remain the same -->
                         <div class="form-group">
                             <label for="client-name">Project's Name:</label>
                             <input type="text" id="client-name" name="client-name" required>
@@ -628,31 +672,45 @@
 
             // PDF Generation function
             function generatePDF() {
+                // Add PDF mode class to body to remove all restrictions
+                document.body.classList.add('pdf-mode');
+                
                 const element = document.querySelector('.container');
                 const opt = {
                     margin: 10,
                     filename: 'webswan-agreement.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    html2canvas: { 
+                        scale: 2,
+                        useCORS: true,
+                        logging: true
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait' 
+                    }
                 };
 
-                // Temporarily remove height restrictions for PDF generation
-                const disclaimerContainer = document.querySelector('.disclaimer-container');
-                const commentContainer = document.querySelector('.comment-container');
-                
-                const originalDisclaimerStyle = disclaimerContainer.style.cssText;
-                const originalCommentStyle = commentContainer.style.cssText;
-                
-                disclaimerContainer.style.maxHeight = 'none';
-                disclaimerContainer.style.overflow = 'visible';
-                commentContainer.style.maxHeight = 'none';
-                commentContainer.style.overflow = 'visible';
+                // Force all containers to expand
+                const containers = document.querySelectorAll('.disclaimer-container, .comment-container, textarea');
+                containers.forEach(container => {
+                    container.style.maxHeight = 'none';
+                    container.style.height = 'auto';
+                    container.style.overflow = 'visible';
+                });
 
+                // Generate PDF
                 html2pdf().set(opt).from(element).save().then(() => {
-                    // Restore original styles after PDF generation
-                    disclaimerContainer.style.cssText = originalDisclaimerStyle;
-                    commentContainer.style.cssText = originalCommentStyle;
+                    // Remove PDF mode class after generation
+                    document.body.classList.remove('pdf-mode');
+                    
+                    // Restore scrollable behavior for screen
+                    containers.forEach(container => {
+                        container.style.maxHeight = '';
+                        container.style.height = '';
+                        container.style.overflow = '';
+                    });
                 });
             }
 
