@@ -247,6 +247,23 @@
             margin-top: 5px;
         }
 
+        /* NEW STYLES FOR PAYMENTS SECTIONS */
+        .advertising-payments-group,
+        .setup-fees-group {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px solid #14395d;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        .advertising-payments-group h3,
+        .setup-fees-group h3 {
+            color: #14395d;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
         /* Screen-only styles with scrolling */
         @media screen {
             .disclaimer-container {
@@ -466,18 +483,76 @@
                             </select>
                         </div>
                         
-                        <div class="monthly-payments-group">
-                            <h3 style="color: #14395d; margin-bottom: 15px;">Monthly Payment Options</h3>
+                        <!-- NEW ADVERTISING PAYMENTS SECTION -->
+                        <div class="advertising-payments-group">
+                            <h3>Full Page Advertising Monthly Payments</h3>
                             <div class="form-group">
                                 <label>
-                                    <input type="checkbox" name="monthly-payment" value="69">
-                                    Monthly payment for hosting security and maintenance $69/month
+                                    <input type="checkbox" name="advertising-payment" value="197">
+                                    Full Page Advertising - $197/month
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
-                                    <input type="checkbox" name="monthly-payment" value="29">
-                                    Monthly payment for Cookie and Accessibility $29/month
+                                    <input type="checkbox" name="advertising-payment" value="189">
+                                    Premium Monthly Payment - $189/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="advertising-payment" value="209">
+                                    Ultimate Premium Monthly Payment - $209/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="advertising-payment" value="109">
+                                    Promotion Monthly Payment - $109/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="advertising-payment" value="89">
+                                    Weekly Promotion Monthly Payment - $89/month
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- NEW SETUP FEES SECTION -->
+                        <div class="setup-fees-group">
+                            <h3>Setup Fees for Advertising Packages</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="setup-fee" value="559">
+                                    Full Page Setup Fee - $559 (one-time)
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="setup-fee" value="499">
+                                    Section Setup Fee - $499 (one-time)
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="setup-fee" value="250">
+                                    Weekly Promotion Setup Fee - $250 (one-time)
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="monthly-payments-group">
+                            <h3>Monthly Payment Options</h3>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="89">
+                                    Monthly payment for hosting security and maintenance $89/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="39">
+                                    Monthly payment for Cookie and Accessibility $39/month
                                 </label>
                             </div>
                             <div class="form-group">
@@ -595,6 +670,8 @@
             const videoAddons = document.querySelectorAll('input[name="video-addons"]');
             const reputationManagement = document.getElementById('reputation-management');
             const monthlyPayments = document.querySelectorAll('input[name="monthly-payment"]');
+            const advertisingPayments = document.querySelectorAll('input[name="advertising-payment"]');
+            const setupFees = document.querySelectorAll('input[name="setup-fee"]');
             const otherCheckbox = document.getElementById('other-checkbox');
             const totalAmountInput = document.getElementById('total-amount');
             const miscellaneousCheckbox = document.getElementById('miscellaneous-checkbox');
@@ -640,6 +717,21 @@
 
                 total += parseInt(reputationManagement.value) || 0;
 
+                // Add advertising payments
+                advertisingPayments.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        total += parseInt(checkbox.value) || 0;
+                    }
+                });
+
+                // Add setup fees
+                setupFees.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        total += parseInt(checkbox.value) || 0;
+                    }
+                });
+
+                // Add existing monthly payments
                 monthlyPayments.forEach(checkbox => {
                     if (checkbox.checked) {
                         total += parseInt(checkbox.value) || 0;
@@ -736,6 +828,15 @@
             });
             
             reputationManagement.addEventListener('change', calculateTotal);
+            
+            // Add event listeners for new payment options
+            advertisingPayments.forEach(checkbox => {
+                checkbox.addEventListener('change', calculateTotal);
+            });
+            
+            setupFees.forEach(checkbox => {
+                checkbox.addEventListener('change', calculateTotal);
+            });
             
             monthlyPayments.forEach(checkbox => {
                 checkbox.addEventListener('change', calculateTotal);
