@@ -173,6 +173,32 @@
             color: white;
         }
 
+        /* NEW SIGN BUTTON STYLES */
+        .btn-sign {
+            background: linear-gradient(135deg, #14395d, #1DF1F1);
+            color: white;
+            font-size: 18px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(20, 57, 93, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-sign:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(20, 57, 93, 0.4);
+            background: linear-gradient(135deg, #1DF1F1, #14395d);
+        }
+
+        .btn-sign i {
+            font-size: 20px;
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -637,6 +663,12 @@
                 </div>
             </main>
             <div class="signature-section">
+                <!-- NEW SIGN BUTTON HERE -->
+                <a href="https://taniad2169.github.io/Webswan-Signature-Scope-of-Work/" target="_blank" class="btn btn-sign">
+                    <i class="fas fa-pen-fancy"></i> Click Here to Sign
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                
                 <div class="agreement-check" id="agreementCheck">
                     <input type="checkbox" id="agreeCheckbox">
                     <p><strong>I acknowledge, understand and agree to the terms and conditions above</strong></p>
