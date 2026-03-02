@@ -290,6 +290,36 @@
             font-size: 18px;
         }
 
+        /* NEW STYLE FOR MONTHLY TOTAL DISPLAY */
+        .monthly-total-container {
+            margin-top: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, #e8f4f8, #d1e7f0);
+            border: 2px solid #1DF1F1;
+            border-radius: 8px;
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            color: #14395d;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .monthly-total-container i {
+            color: #1DF1F1;
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        
+        #monthly-total-amount {
+            font-size: 22px;
+            color: #14395d;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            margin-left: 10px;
+            border: 1px solid #14395d;
+        }
+
         /* Screen-only styles with scrolling */
         @media screen {
             .disclaimer-container {
@@ -429,8 +459,10 @@
                         <div class="form-group">
                             <label for="project-type">What was the project?</label>
                             <select id="project-type" name="project-type">
-                                <option value="1899">Standard $2,499 web design</option>
-                                <option value="1599">Landing page $1,599</option>
+                                <option value="">-- Select an option (optional) --</option>
+                                <option value="999">Start-up custom web design $999</option>
+                                <option value="1064">PWA form and calendar with QR code $1064</option>
+                                <option value="1299">Landing page $1,299</option>
                                 <option value="3899">Premium web design $4,899</option>
                                 <option value="10000">Ultimate premium plan $10,000</option>
                                 <option value="discounted">Discounted</option>
@@ -449,11 +481,15 @@
                             <input type="date" id="calendar-date" name="calendar-date">
                         </div>
                         <div class="form-group">
-                            <label>Additional Selections:</label>
+                            <label>Additional Selections (One-Time Fees):</label>
                             <div class="checkbox-group">
                                 <label>
                                     <input type="checkbox" name="addons" value="599">
-                                    $599 Cookie and Accessibility Banners
+                                    $599 Cookie and Accessibility Banners (Standalone - Both)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="addons" value="299">
+                                    $299 Per Item Standalone (ADA or Cookie - single item)
                                 </label>
                                 <label>
                                     <input type="checkbox" name="addons" value="195">
@@ -461,15 +497,23 @@
                                 </label>
                                 <label>
                                     <input type="checkbox" name="addons" value="95">
-                                    $95 QR code
+                                    $95 Standard QR Code (one-time)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="addons" value="225">
+                                    $225 Custom QR Code with Your Logo (one-time)
                                 </label>
                                 <label>
                                     <input type="checkbox" name="addons" value="450">
-                                    $450 Custom forms & calendars
+                                    $450 Custom forms & calendars (with website)
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="addons" value="195">
-                                    $195 Language translator
+                                    <input type="checkbox" name="addons" value="899">
+                                    $899 Custom forms & calendars (standalone)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="addons" value="150">
+                                    $150 Language translator
                                 </label>
                                 <label>
                                     <input type="checkbox" name="addons" value="150">
@@ -509,42 +553,30 @@
                             </select>
                         </div>
                         
-                        <!-- NEW ADVERTISING PAYMENTS SECTION -->
+                        <!-- ADVERTISING MONTHLY PAYMENTS SECTION -->
                         <div class="advertising-payments-group">
-                            <h3>Full Page Advertising Monthly Payments</h3>
+                            <h3>Advertising Monthly Payments</h3>
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="advertising-payment" value="197">
-                                    Full Page Advertising - $197/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="advertising-payment" value="189">
-                                    Premium Monthly Payment - $189/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="advertising-payment" value="209">
-                                    Ultimate Premium Monthly Payment - $209/month
+                                    Full Page Monthly Payment - $197/month
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="advertising-payment" value="109">
-                                    Promotion Monthly Payment - $109/month
+                                    Section Monthly Payment - $109/month
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="advertising-payment" value="89">
-                                    Weekly Promotion Monthly Payment - $89/month
+                                    Weekly Promotion - $89/week
                                 </label>
                             </div>
                         </div>
                         
-                        <!-- NEW SETUP FEES SECTION -->
+                        <!-- SETUP FEES SECTION -->
                         <div class="setup-fees-group">
                             <h3>Setup Fees for Advertising Packages</h3>
                             <div class="form-group">
@@ -565,32 +597,64 @@
                                     Weekly Promotion Setup Fee - $250 (one-time)
                                 </label>
                             </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="setup-fee" value="399">
+                                    Cookie & Accessibility Setup Fee (with website) - $399 (one-time)
+                                </label>
+                            </div>
                         </div>
                         
+                        <!-- MONTHLY PAYMENT OPTIONS -->
                         <div class="monthly-payments-group">
-                            <h3>Monthly Payment Options</h3>
+                            <h3>Monthly Payment Options (Hosting, Maintenance, Security)</h3>
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="monthly-payment" value="89">
-                                    Monthly payment for hosting security and maintenance $89/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="39">
-                                    Monthly payment for Cookie and Accessibility $39/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="89">
-                                    Monthly payment option $89/month
+                                    Landing Page Monthly (hosting/security/maintenance) - $89/month
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="monthly-payment" value="109">
-                                    Monthly payment option $109/month
+                                    Start-up Monthly (hosting/security/maintenance) - $109/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="149">
+                                    Premium Monthly (hosting/security/maintenance) - $149/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="209">
+                                    Ultimate Premium Monthly (hosting/security/maintenance) - $209/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="39">
+                                    Cookie & Accessibility (with our website/landing page) - $39/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="49">
+                                    Cookie & Accessibility (standalone) - $49/month
+                                </label>
+                            </div>
+                            <!-- QR CODE MONTHLY MAINTENANCE OPTIONS -->
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="10">
+                                    Standard QR Code (maintenance & hosting) - $10/month
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="15">
+                                    Custom QR Code with Logo (maintenance & hosting) - $15/month
                                 </label>
                             </div>
                         </div>
@@ -603,8 +667,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="total-amount">Total Due</label>
-                            <input type="text" id="total-amount" name="total-amount" placeholder="Amount will auto-populate" readonly>
+                            <label for="total-amount">Total Due (One-Time)</label>
+                            <input type="text" id="total-amount" name="total-amount" placeholder="$0 (auto-calculates based on selections)" readonly>
+                        </div>
+
+                        <!-- MONTHLY TOTAL FIELD - right under total due -->
+                        <div class="monthly-total-container">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Total Monthly Payment:</span>
+                            <span id="monthly-total-amount">$0</span>
                         </div>
 
                         <div class="btn-row">
@@ -706,6 +777,7 @@
             const setupFees = document.querySelectorAll('input[name="setup-fee"]');
             const otherCheckbox = document.getElementById('other-checkbox');
             const totalAmountInput = document.getElementById('total-amount');
+            const monthlyTotalSpan = document.getElementById('monthly-total-amount');
             const miscellaneousCheckbox = document.getElementById('miscellaneous-checkbox');
             const miscellaneousCommentContainer = document.getElementById('miscellaneous-comment-container');
             const miscellaneousComment = document.getElementById('miscellaneous-comment');
@@ -727,50 +799,61 @@
                 }
                 
                 let total = 0;
+                let monthlyTotal = 0;
                 
+                // Project type selection (one-time) - ONLY if a value is selected
                 const selectedProjectType = projectType.value;
-                if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer' || selectedProjectType === 'familydiscount') {
-                    total += parseFloat(customPriceInput.value) || 0;
-                } else {
-                    total += parseInt(selectedProjectType) || 0;
+                if (selectedProjectType && selectedProjectType !== '') {
+                    if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer' || selectedProjectType === 'familydiscount') {
+                        total += parseFloat(customPriceInput.value) || 0;
+                    } else {
+                        total += parseInt(selectedProjectType) || 0;
+                    }
                 }
 
+                // Additional selections (one-time)
                 addons.forEach(checkbox => {
                     if (checkbox.checked) {
                         total += parseInt(checkbox.value) || 0;
                     }
                 });
 
+                // Video addons (one-time)
                 videoAddons.forEach(radio => {
                     if (radio.checked) {
                         total += parseInt(radio.value) || 0;
                     }
                 });
 
-                total += parseInt(reputationManagement.value) || 0;
+                // Reputation management (monthly)
+                const repValue = parseInt(reputationManagement.value) || 0;
+                if (repValue > 0) {
+                    monthlyTotal += repValue;
+                }
 
-                // Add advertising payments
+                // Advertising payments (monthly)
                 advertisingPayments.forEach(checkbox => {
                     if (checkbox.checked) {
-                        total += parseInt(checkbox.value) || 0;
+                        monthlyTotal += parseInt(checkbox.value) || 0;
                     }
                 });
 
-                // Add setup fees
+                // Setup fees (one-time)
                 setupFees.forEach(checkbox => {
                     if (checkbox.checked) {
                         total += parseInt(checkbox.value) || 0;
                     }
                 });
 
-                // Add existing monthly payments
+                // Monthly payment options (hosting, maintenance, cookie accessibility, QR code)
                 monthlyPayments.forEach(checkbox => {
                     if (checkbox.checked) {
-                        total += parseInt(checkbox.value) || 0;
+                        monthlyTotal += parseInt(checkbox.value) || 0;
                     }
                 });
 
                 totalAmountInput.value = '$' + total;
+                monthlyTotalSpan.textContent = '$' + monthlyTotal;
             }
 
             function countWords(text) {
