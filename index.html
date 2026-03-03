@@ -173,7 +173,6 @@
             color: white;
         }
 
-        /* NEW SIGN BUTTON STYLES */
         .btn-sign {
             background: linear-gradient(135deg, #14395d, #1DF1F1);
             color: white;
@@ -273,7 +272,6 @@
             margin-top: 5px;
         }
 
-        /* NEW STYLES FOR PAYMENTS SECTIONS */
         .advertising-payments-group,
         .setup-fees-group {
             margin-top: 20px;
@@ -290,7 +288,6 @@
             font-size: 18px;
         }
 
-        /* NEW STYLE FOR MONTHLY TOTAL DISPLAY */
         .monthly-total-container {
             margin-top: 10px;
             padding: 15px;
@@ -320,7 +317,6 @@
             border: 1px solid #14395d;
         }
 
-        /* Screen-only styles with scrolling */
         @media screen {
             .disclaimer-container {
                 max-height: 400px;
@@ -369,7 +365,6 @@
             }
         }
 
-        /* Print/PDF styles - NO height restrictions */
         @media print {
             body {
                 padding: 0;
@@ -403,7 +398,6 @@
                 overflow: visible !important;
             }
             
-            /* Ensure all content is visible in PDF */
             .disclaimer-container,
             .comment-container,
             textarea {
@@ -413,7 +407,6 @@
             }
         }
 
-        /* PDF-specific class to remove all restrictions */
         .pdf-mode .disclaimer-container,
         .pdf-mode .comment-container,
         .pdf-mode textarea {
@@ -461,7 +454,7 @@
                             <select id="project-type" name="project-type">
                                 <option value="">-- Select an option (optional) --</option>
                                 <option value="999">Start-up custom web design $999</option>
-                                <option value="1064">PWA form and calendar with QR code $1064</option>
+                                <option value="1064">PWA calendar and form bundle with QR code $1,064</option>
                                 <option value="1299">Landing page $1,299</option>
                                 <option value="3899">Premium web design $4,899</option>
                                 <option value="10000">Ultimate premium plan $10,000</option>
@@ -504,12 +497,12 @@
                                     $225 Custom QR Code with Your Logo (one-time)
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="addons" value="450">
-                                    $450 Custom forms & calendars (with website)
+                                    <input type="checkbox" name="addons" value="575">
+                                    $575 Custom forms &amp; calendars (with website)
                                 </label>
                                 <label>
                                     <input type="checkbox" name="addons" value="899">
-                                    $899 Custom forms & calendars (standalone)
+                                    $899 Custom forms &amp; calendars (standalone)
                                 </label>
                                 <label>
                                     <input type="checkbox" name="addons" value="150">
@@ -600,7 +593,7 @@
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="setup-fee" value="399">
-                                    Cookie & Accessibility Setup Fee (with website) - $399 (one-time)
+                                    Cookie &amp; Accessibility Setup Fee (with website) - $399 (one-time)
                                 </label>
                             </div>
                         </div>
@@ -635,26 +628,31 @@
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="monthly-payment" value="39">
-                                    Cookie & Accessibility (with our website/landing page) - $39/month
+                                    Cookie &amp; Accessibility (with our website/landing page) - $39/month
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="monthly-payment" value="49">
-                                    Cookie & Accessibility (standalone) - $49/month
+                                    Cookie &amp; Accessibility (standalone) - $49/month
                                 </label>
                             </div>
-                            <!-- QR CODE MONTHLY MAINTENANCE OPTIONS -->
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="monthly-payment" value="69">
+                                    PWA Calendar &amp; Form Bundle with QR Code (maintenance &amp; hosting) - $69/month
+                                </label>
+                            </div>
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="monthly-payment" value="10">
-                                    Standard QR Code (maintenance & hosting) - $10/month
+                                    Standard QR Code (maintenance &amp; hosting) - $10/month
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     <input type="checkbox" name="monthly-payment" value="15">
-                                    Custom QR Code with Logo (maintenance & hosting) - $15/month
+                                    Custom QR Code with Logo (maintenance &amp; hosting) - $15/month
                                 </label>
                             </div>
                         </div>
@@ -671,7 +669,7 @@
                             <input type="text" id="total-amount" name="total-amount" placeholder="$0 (auto-calculates based on selections)" readonly>
                         </div>
 
-                        <!-- MONTHLY TOTAL FIELD - right under total due -->
+                        <!-- MONTHLY TOTAL FIELD -->
                         <div class="monthly-total-container">
                             <i class="fas fa-calendar-alt"></i>
                             <span>Total Monthly Payment:</span>
@@ -734,7 +732,6 @@
                 </div>
             </main>
             <div class="signature-section">
-                <!-- NEW SIGN BUTTON HERE -->
                 <a href="https://taniad2169.github.io/Webswan-Signature-Scope-of-Work/" target="_blank" class="btn btn-sign">
                     <i class="fas fa-pen-fancy"></i> Click Here to Sign
                     <i class="fas fa-arrow-right"></i>
@@ -801,7 +798,6 @@
                 let total = 0;
                 let monthlyTotal = 0;
                 
-                // Project type selection (one-time) - ONLY if a value is selected
                 const selectedProjectType = projectType.value;
                 if (selectedProjectType && selectedProjectType !== '') {
                     if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer' || selectedProjectType === 'familydiscount') {
@@ -811,41 +807,35 @@
                     }
                 }
 
-                // Additional selections (one-time)
                 addons.forEach(checkbox => {
                     if (checkbox.checked) {
                         total += parseInt(checkbox.value) || 0;
                     }
                 });
 
-                // Video addons (one-time)
                 videoAddons.forEach(radio => {
                     if (radio.checked) {
                         total += parseInt(radio.value) || 0;
                     }
                 });
 
-                // Reputation management (monthly)
                 const repValue = parseInt(reputationManagement.value) || 0;
                 if (repValue > 0) {
                     monthlyTotal += repValue;
                 }
 
-                // Advertising payments (monthly)
                 advertisingPayments.forEach(checkbox => {
                     if (checkbox.checked) {
                         monthlyTotal += parseInt(checkbox.value) || 0;
                     }
                 });
 
-                // Setup fees (one-time)
                 setupFees.forEach(checkbox => {
                     if (checkbox.checked) {
                         total += parseInt(checkbox.value) || 0;
                     }
                 });
 
-                // Monthly payment options (hosting, maintenance, cookie accessibility, QR code)
                 monthlyPayments.forEach(checkbox => {
                     if (checkbox.checked) {
                         monthlyTotal += parseInt(checkbox.value) || 0;
@@ -866,7 +856,6 @@
                 
                 if (wordCount > maxWords) {
                     counter.style.color = 'red';
-                    // Trim the text to max words
                     const words = textarea.value.trim().split(/\s+/);
                     if (words.length > maxWords) {
                         textarea.value = words.slice(0, maxWords).join(' ');
@@ -877,9 +866,7 @@
                 }
             }
 
-            // PDF Generation function
             function generatePDF() {
-                // Add PDF mode class to body to remove all restrictions
                 document.body.classList.add('pdf-mode');
                 
                 const element = document.querySelector('.container');
@@ -899,7 +886,6 @@
                     }
                 };
 
-                // Force all containers to expand
                 const containers = document.querySelectorAll('.disclaimer-container, .comment-container, textarea');
                 containers.forEach(container => {
                     container.style.maxHeight = 'none';
@@ -907,12 +893,9 @@
                     container.style.overflow = 'visible';
                 });
 
-                // Generate PDF
                 html2pdf().set(opt).from(element).save().then(() => {
-                    // Remove PDF mode class after generation
                     document.body.classList.remove('pdf-mode');
                     
-                    // Restore scrollable behavior for screen
                     containers.forEach(container => {
                         container.style.maxHeight = '';
                         container.style.height = '';
@@ -921,7 +904,6 @@
                 });
             }
 
-            // Event listeners
             projectType.addEventListener('change', function() {
                 if (this.value === 'discounted' || this.value === 'specialOffer' || this.value === 'familydiscount') {
                     customPriceContainer.style.display = 'block';
@@ -944,7 +926,6 @@
             
             reputationManagement.addEventListener('change', calculateTotal);
             
-            // Add event listeners for new payment options
             advertisingPayments.forEach(checkbox => {
                 checkbox.addEventListener('change', calculateTotal);
             });
@@ -965,12 +946,10 @@
                 }
             });
             
-            // Word count for miscellaneous comments
             miscellaneousComment.addEventListener('input', function() {
                 updateWordCount(this, miscWordCount, 1000);
             });
             
-            // Word count for general comments
             generalComment.addEventListener('input', function() {
                 updateWordCount(this, generalWordCount, 1000);
             });
@@ -1037,7 +1016,6 @@
                 alert('Data saved!');
             });
 
-            // Initialize
             calculateTotal();
         });
     </script>
