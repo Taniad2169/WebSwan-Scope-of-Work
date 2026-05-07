@@ -3,428 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSwan - E-Signature Agreement</title>
+    <title>WebSwan - Scope of Work Agreement</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: white; color: #14395d; line-height: 1.6; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden; }
+        header { background: #14395d; color: #1DF1F1; padding: 25px; text-align: center; }
+        .logo { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+        .logo i { font-size: 36px; margin-right: 15px; color: #1DF1F1; }
+        h1 { font-size: 28px; margin-bottom: 10px; color: #1DF1F1; }
+        .header-description { opacity: 0.9; max-width: 600px; margin: 0 auto; color: #1DF1F1; }
+        .content-wrapper { padding: 20px; }
+        .form-section { padding: 20px; }
+        .form-section h2 { color: #14395d; border-bottom: 2px solid #14395d; padding-bottom: 10px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #14395d; }
+        input[type="text"], input[type="email"], input[type="date"], textarea, select, input[type="number"] { width: 100%; padding: 12px; border: 2px solid #ccc; border-radius: 5px; font-size: 16px; background-color: #e1e9f0; color: #073766; }
+        textarea { resize: vertical; min-height: 150px; }
+        .checkbox-group label, .radio-group label { display: inline-flex; align-items: center; margin-right: 20px; font-weight: bold; color: #14395d; }
+        .checkbox-group input, .radio-group input { margin-right: 8px; width: auto; }
+        .miscellaneous-comment-container, .custom-price-container { display: none; margin-top: 15px; }
+        .disclaimer-container { padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-top: 20px; background-color: #f9f9f9; max-height: 400px; overflow-y: auto; }
+        .disclaimer-container h2 { color: #14395d; }
+        .signature-section { padding: 20px; text-align: center; background: #f9f9f9; border-top: 1px solid #ccc; }
+        .btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; }
+        .btn-primary { background-color: #14395d; color: white; }
+        .btn-success { background: #28a745; color: white; }
 
-        body {
-            background: white;
-            color: #14395d;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-        }
-
-        header {
-            background: #14395d;
-            color: #1DF1F1;
-            padding: 25px;
-            text-align: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .logo i {
-            font-size: 36px;
-            margin-right: 15px;
-            color: #1DF1F1;
-        }
-
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #1DF1F1;
-        }
-
-        .header-description {
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-            color: #1DF1F1;
-        }
-
-        .content-wrapper {
-            padding: 20px;
-        }
-
-        .form-section {
-            padding: 20px;
-        }
-
-        .form-section h2 {
-            color: #14395d;
-            border-bottom: 2px solid #14395d;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #14395d;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="date"],
-        textarea,
-        select,
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            background-color: #e1e9f0;
-            color: #073766;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        .checkbox-group label,
-        .radio-group label {
-            display: inline-flex;
-            align-items: center;
-            margin-right: 20px;
-            font-weight: bold;
-            color: #14395d;
-        }
-
-        .checkbox-group input,
-        .radio-group input {
-            margin-right: 8px;
-            width: auto;
-        }
-
-        .miscellaneous-comment-container,
-        .custom-price-container {
-            display: none;
-            margin-top: 15px;
-        }
-
-        .disclaimer-container {
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            margin-top: 20px;
-            background-color: #f9f9f9;
-        }
-
-        .disclaimer-container h2 {
-            color: #14395d;
-        }
-
-        .signature-section {
-            padding: 20px;
-            text-align: center;
-            background: #f9f9f9;
-            border-top: 1px solid #ccc;
-        }
-
-        .btn-row {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            margin: 5px;
-        }
-
-        .btn-primary {
-            background-color: #14395d;
-            color: white;
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-
+        /* ✅ SIGN BUTTON */
         .btn-sign {
             background: linear-gradient(135deg, #14395d, #1DF1F1);
             color: white;
             font-size: 18px;
-            padding: 15px 30px;
+            padding: 15px 35px;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(20, 57, 93, 0.3);
+            box-shadow: 0 4px 15px rgba(20,57,93,0.3);
             transition: all 0.3s ease;
             border: 2px solid white;
-            margin-bottom: 20px;
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 20px auto;
         }
-
         .btn-sign:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(20, 57, 93, 0.4);
+            box-shadow: 0 8px 25px rgba(20,57,93,0.4);
             background: linear-gradient(135deg, #1DF1F1, #14395d);
         }
+        .btn-sign i { font-size: 20px; }
 
-        .btn-sign i {
-            font-size: 20px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9em;
-            color: #7f8c8d;
-            background-color: #f1f1f1;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            max-width: 450px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .modal-close {
-            background: #4a6580;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        .comment-section {
-            padding: 20px;
-        }
-        
-        .comment-section h2 {
-            color: #14395d;
-            border-bottom: 2px solid #14395d;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .comment-container {
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #f9f9f9;
-        }
-        
-        .monthly-payments-group {
-            margin-top: 15px;
-            padding: 15px;
-            border: 2px solid #14395d;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-        }
-
-        .word-count {
-            font-size: 12px;
-            color: #666;
-            text-align: right;
-            margin-top: 5px;
-        }
-
-        .advertising-payments-group,
-        .setup-fees-group {
-            margin-top: 20px;
-            padding: 15px;
-            border: 2px solid #14395d;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-        }
-
-        .advertising-payments-group h3,
-        .setup-fees-group h3 {
-            color: #14395d;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .monthly-total-container {
-            margin-top: 10px;
-            padding: 15px;
-            background: linear-gradient(135deg, #e8f4f8, #d1e7f0);
-            border: 2px solid #1DF1F1;
-            border-radius: 8px;
-            text-align: right;
-            font-size: 18px;
-            font-weight: bold;
-            color: #14395d;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .monthly-total-container i {
-            color: #1DF1F1;
-            margin-right: 10px;
-            font-size: 22px;
-        }
-        
-        #monthly-total-amount {
-            font-size: 22px;
-            color: #14395d;
-            background: white;
-            padding: 5px 15px;
-            border-radius: 50px;
-            margin-left: 10px;
-            border: 1px solid #14395d;
-        }
-
-        @media screen {
-            .disclaimer-container {
-                max-height: 400px;
-                overflow-y: auto;
-            }
-            
-            .disclaimer-container::-webkit-scrollbar {
-                width: 8px;
-            }
-
-            .disclaimer-container::-webkit-scrollbar-track {
-                background: #f1f1f1;
-                border-radius: 4px;
-            }
-
-            .disclaimer-container::-webkit-scrollbar-thumb {
-                background: #14395d;
-                border-radius: 4px;
-            }
-
-            .disclaimer-container::-webkit-scrollbar-thumb:hover {
-                background: #0f2b47;
-            }
-            
-            .comment-container {
-                max-height: 300px;
-                overflow-y: auto;
-            }
-            
-            .comment-container::-webkit-scrollbar {
-                width: 8px;
-            }
-
-            .comment-container::-webkit-scrollbar-track {
-                background: #f1f1f1;
-                border-radius: 4px;
-            }
-
-            .comment-container::-webkit-scrollbar-thumb {
-                background: #14395d;
-                border-radius: 4px;
-            }
-
-            .comment-container::-webkit-scrollbar-thumb:hover {
-                background: #0f2b47;
-            }
-        }
-
+        .comment-section { padding: 20px; }
+        .comment-section h2 { color: #14395d; border-bottom: 2px solid #14395d; padding-bottom: 10px; margin-bottom: 20px; }
+        .comment-container { padding: 15px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; max-height: 300px; overflow-y: auto; }
+        .monthly-payments-group { margin-top: 15px; padding: 15px; border: 2px solid #14395d; border-radius: 8px; background-color: #f8f9fa; }
+        .word-count { font-size: 12px; color: #666; text-align: right; margin-top: 5px; }
+        .advertising-payments-group, .setup-fees-group { margin-top: 20px; padding: 15px; border: 2px solid #14395d; border-radius: 8px; background-color: #f8f9fa; }
+        .advertising-payments-group h3, .setup-fees-group h3, .monthly-payments-group h3 { color: #14395d; margin-bottom: 15px; font-size: 18px; }
+        .monthly-total-container { margin-top: 10px; padding: 15px; background: linear-gradient(135deg, #e8f4f8, #d1e7f0); border: 2px solid #1DF1F1; border-radius: 8px; text-align: right; font-size: 18px; font-weight: bold; color: #14395d; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .monthly-total-container i { color: #1DF1F1; margin-right: 10px; font-size: 22px; }
+        #monthly-total-amount { font-size: 22px; color: #14395d; background: white; padding: 5px 15px; border-radius: 50px; margin-left: 10px; border: 1px solid #14395d; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+        .modal-content { background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); max-width: 450px; width: 90%; text-align: center; }
+        .modal-close { background: #4a6580; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
+        footer { text-align: center; padding: 20px; font-size: 0.9em; color: #7f8c8d; background-color: #f1f1f1; }
         @media print {
-            body {
-                padding: 0;
-                background: white;
-            }
-            
-            .container {
-                box-shadow: none;
-                border-radius: 0;
-                max-width: none;
-            }
-            
-            .btn {
-                display: none;
-            }
-            
-            .disclaimer-container,
-            .comment-container {
-                border: 1px solid #000;
-                page-break-inside: avoid;
-                max-height: none !important;
-                height: auto !important;
-                overflow: visible !important;
-            }
-            
-            textarea {
-                border: 1px solid #000;
-                background: white;
-                min-height: 200px;
-                height: auto !important;
-                overflow: visible !important;
-            }
-            
-            .disclaimer-container,
-            .comment-container,
-            textarea {
-                max-height: none !important;
-                height: auto !important;
-                overflow: visible !important;
-            }
-        }
-
-        .pdf-mode .disclaimer-container,
-        .pdf-mode .comment-container,
-        .pdf-mode textarea {
-            max-height: none !important;
-            height: auto !important;
-            overflow: visible !important;
+            body { padding: 0; background: white; }
+            .container { box-shadow: none; border-radius: 0; max-width: none; }
+            .btn { display: none; }
+            .disclaimer-container, .comment-container { border: 1px solid #000; page-break-inside: avoid; max-height: none !important; height: auto !important; overflow: visible !important; }
+            textarea { border: 1px solid #000; background: white; min-height: 200px; height: auto !important; overflow: visible !important; }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <header>
             <div class="logo">
                 <i class="fas fa-feather-alt"></i>
-                <h1>WebSwan E-Signature Agreement</h1>
+                <h1>WebSwan Scope of Work Agreement</h1>
             </div>
-            <p class="header-description">Please provide your information and sign the agreement below</p>
+            <p class="header-description">Please provide your information and review the scope of work below</p>
         </header>
 
         <div class="content-wrapper">
@@ -448,7 +110,6 @@
                             <label for="client-email">Email Address:</label>
                             <input type="email" id="client-email" name="client-email" required>
                         </div>
-
                         <div class="form-group">
                             <label for="project-type">What was the project?</label>
                             <select id="project-type" name="project-type">
@@ -476,58 +137,22 @@
                         <div class="form-group">
                             <label>Additional Selections (One-Time Fees):</label>
                             <div class="checkbox-group">
-                                <label>
-                                    <input type="checkbox" name="addons" value="599">
-                                    $599 Cookie and Accessibility Banners (Standalone - Both)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="addons" value="299">
-                                    $299 Per Item Standalone (ADA or Cookie - single item)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="addons" value="195">
-                                    $195 Logo
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="addons" value="95">
-                                    $95 Standard QR Code (one-time)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="addons" value="225">
-                                    $225 Custom QR Code with Your Logo (one-time)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="addons" value="575">
-                                    $575 Custom forms &amp; calendars (with website)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="addons" value="899">
-                                    $899 Custom forms &amp; calendars (standalone)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="addons" value="150">
-                                    $150 Language translator
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="addons" value="150">
-                                    $150 Ad campaign script for social media
-                                </label>
+                                <label><input type="checkbox" name="addons" value="599"> $599 Cookie and Accessibility Banners (Standalone - Both)</label>
+                                <label><input type="checkbox" name="addons" value="299"> $299 Per Item Standalone (ADA or Cookie - single item)</label>
+                                <label><input type="checkbox" name="addons" value="195"> $195 Logo</label>
+                                <label><input type="checkbox" name="addons" value="95"> $95 Standard QR Code (one-time)</label>
+                                <label><input type="checkbox" name="addons" value="225"> $225 Custom QR Code with Your Logo (one-time)</label>
+                                <label><input type="checkbox" name="addons" value="575"> $575 Custom forms &amp; calendars (with website)</label>
+                                <label><input type="checkbox" name="addons" value="899"> $899 Custom forms &amp; calendars (standalone)</label>
+                                <label><input type="checkbox" name="addons" value="150"> $150 Language translator</label>
+                                <label><input type="checkbox" name="addons" value="150"> $150 Ad campaign script for social media</label>
                             </div>
                             <div class="radio-group">
-                                <label>
-                                    <input type="radio" name="video-addons" value="899">
-                                    $899 Ad campaign video without a website
-                                </label>
-                                <label>
-                                    <input type="radio" name="video-addons" value="799">
-                                    $799 Ad campaign video with a website
-                                </label>
+                                <label><input type="radio" name="video-addons" value="899"> $899 Ad campaign video without a website</label>
+                                <label><input type="radio" name="video-addons" value="799"> $799 Ad campaign video with a website</label>
                             </div>
-                            <div class="checkbox-group" style="margin-top: 15px;">
-                                <label>
-                                    <input type="checkbox" id="miscellaneous-checkbox">
-                                    Miscellaneous
-                                </label>
+                            <div class="checkbox-group" style="margin-top:15px;">
+                                <label><input type="checkbox" id="miscellaneous-checkbox"> Miscellaneous</label>
                             </div>
                         </div>
                         <div id="miscellaneous-comment-container" class="miscellaneous-comment-container">
@@ -545,138 +170,48 @@
                                 <option value="109">Standalone $109/month</option>
                             </select>
                         </div>
-                        
-                        <!-- ADVERTISING MONTHLY PAYMENTS SECTION -->
+
                         <div class="advertising-payments-group">
                             <h3>Advertising Monthly Payments</h3>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="advertising-payment" value="197">
-                                    Full Page Monthly Payment - $197/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="advertising-payment" value="109">
-                                    Section Monthly Payment - $109/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="advertising-payment" value="89">
-                                    Weekly Promotion - $89/week
-                                </label>
-                            </div>
+                            <div class="form-group"><label><input type="checkbox" name="advertising-payment" value="197"> Full Page Monthly Payment - $197/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="advertising-payment" value="109"> Section Monthly Payment - $109/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="advertising-payment" value="89"> Weekly Promotion - $89/week</label></div>
                         </div>
-                        
-                        <!-- SETUP FEES SECTION -->
+
                         <div class="setup-fees-group">
                             <h3>Setup Fees for Advertising Packages</h3>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="setup-fee" value="559">
-                                    Full Page Setup Fee - $559 (one-time)
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="setup-fee" value="499">
-                                    Section Setup Fee - $499 (one-time)
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="setup-fee" value="250">
-                                    Weekly Promotion Setup Fee - $250 (one-time)
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="setup-fee" value="399">
-                                    Cookie &amp; Accessibility Setup Fee (with website) - $399 (one-time)
-                                </label>
-                            </div>
+                            <div class="form-group"><label><input type="checkbox" name="setup-fee" value="559"> Full Page Setup Fee - $559 (one-time)</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="setup-fee" value="499"> Section Setup Fee - $499 (one-time)</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="setup-fee" value="250"> Weekly Promotion Setup Fee - $250 (one-time)</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="setup-fee" value="399"> Cookie &amp; Accessibility Setup Fee (with website) - $399 (one-time)</label></div>
                         </div>
-                        
-                        <!-- MONTHLY PAYMENT OPTIONS -->
+
                         <div class="monthly-payments-group">
                             <h3>Monthly Payment Options (Hosting, Maintenance, Security)</h3>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="89">
-                                    Landing Page Monthly (hosting/security/maintenance) - $89/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="109">
-                                    Start-up Monthly (hosting/security/maintenance) - $109/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="149">
-                                    Premium Monthly (hosting/security/maintenance) - $149/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="209">
-                                    Ultimate Premium Monthly (hosting/security/maintenance) - $209/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="39">
-                                    Cookie &amp; Accessibility (with our website/landing page) - $39/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="49">
-                                    Cookie &amp; Accessibility (standalone) - $49/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="69">
-                                    PWA Calendar &amp; Form Bundle with QR Code (maintenance &amp; hosting) - $69/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="10">
-                                    Standard QR Code (maintenance &amp; hosting) - $10/month
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="monthly-payment" value="15">
-                                    Custom QR Code with Logo (maintenance &amp; hosting) - $15/month
-                                </label>
-                            </div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="89"> Landing Page Monthly - $89/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="109"> Start-up Monthly - $109/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="149"> Premium Monthly - $149/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="209"> Ultimate Premium Monthly - $209/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="39"> Cookie &amp; Accessibility (with our website) - $39/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="49"> Cookie &amp; Accessibility (standalone) - $49/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="69"> PWA Calendar &amp; Form Bundle - $69/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="10"> Standard QR Code - $10/month</label></div>
+                            <div class="form-group"><label><input type="checkbox" name="monthly-payment" value="15"> Custom QR Code with Logo - $15/month</label></div>
                         </div>
 
                         <div class="form-group">
-                            <label>
-                                <input type="checkbox" id="other-checkbox">
-                                Other
-                            </label>
+                            <label><input type="checkbox" id="other-checkbox"> Other</label>
                         </div>
-
                         <div class="form-group">
                             <label for="total-amount">Total Due (One-Time)</label>
-                            <input type="text" id="total-amount" name="total-amount" placeholder="$0 (auto-calculates based on selections)" readonly>
+                            <input type="text" id="total-amount" name="total-amount" placeholder="$0 (auto-calculates)" readonly>
                         </div>
-
-                        <!-- MONTHLY TOTAL FIELD -->
                         <div class="monthly-total-container">
                             <i class="fas fa-calendar-alt"></i>
                             <span>Total Monthly Payment:</span>
                             <span id="monthly-total-amount">$0</span>
                         </div>
-
-                        <div class="btn-row">
+                        <div style="text-align:center;margin-top:1rem;">
                             <button type="button" class="btn btn-primary" id="save-btn-data">Save Data</button>
                         </div>
                     </form>
@@ -684,42 +219,20 @@
 
                 <div class="disclaimer-container">
                     <h2>WebSwan Scope of Work for Web Design Services</h2>
-                    <p><strong>1. Project Overview</strong><br>
-                        We begin with a free demo at no cost and with no obligation. This demo requires approximately 15 minutes of your time to review the design and discuss any updates or changes you would like. If you decide not to proceed, you pay nothing. Once the presentation is complete and the website's core structure and design links are in place, we will collect full payment and continue working to complete the remaining links and content. Please note that at the time of payment, the website's design and structure will be established, but not all links will yet be fully live. This project involves the design, development, and maintenance of a professional website for [Client's Business]. The website will serve as a platform to showcase Client's Business/Product/Services and engage with potential customers.</p>
-                    <p><strong>2. Deliverables</strong><br>
-                        Custom website design and layout based on client's branding and requirements. Development of responsive website pages optimized for desktop and mobile devices. Integration of essential features such as contact forms, galleries, and social media links, security measures and set up of website hosting.</p>
-                    <p><strong>3. Pricing and Payment Terms</strong><br>
-                        Please refer to <a href="https://www.thewebswan.com/pricing--39bf6158-d773-4eaa-aae7-7828c9fdd8db" target="_blank">https://www.thewebswan.com/pricing--39bf6158-d773-4eaa-aae7-7828c9fdd8db</a> Our pricing includes everything discussed in the scope of work for the design, layout, functionality, and all the essential elements for a professional, fully functional website tailored to your business.</p>
-                    <p><strong>4. Client Responsibilities</strong><br>
-                        Provide clear direction, feedback, and content for the website. Review and approve design mockups and website drafts in a timely manner. Collaborate with the designer during the development process.</p>
-                    <p><strong>5. Revisions and Change Requests</strong><br>
-                        Two rounds of revisions are included in the design fee. For additional editing after the two rounds the cost is $75/revision/edits.</p>
-                    <p><strong>6. Testing and Quality Assurance</strong><br>
-                        Thorough testing of the website across different browsers and devices to ensure compatibility and functionality. Client review and feedback process during the testing phase to address any issues or concerns.</p>
-                    <p><strong>7. Launch and Handover</strong><br>
-                        Finalization of website design and functionality. Transfer of website ownership and necessary credentials to the client. Training or documentation provided for basic website maintenance tasks. Client is responsible to link their domain with a third party.</p>
-                    <p><strong>8. Legal Terms</strong><br>
-                        Limitations of liability and warranty disclaimer. Ownership of intellectual property rights upon full payment of design fee. Dispute resolution process outlined in the agreement.</p>
+                    <p><strong>1. Project Overview</strong><br>We begin with a free demo at no cost and with no obligation. This demo requires approximately 15 minutes of your time to review the design and discuss any updates or changes you would like. If you decide not to proceed, you pay nothing. Once the presentation is complete and the website's core structure and design links are in place, we will collect full payment and continue working to complete the remaining links and content.</p>
+                    <p><strong>2. Deliverables</strong><br>Custom website design and layout based on client's branding and requirements. Development of responsive website pages optimized for desktop and mobile devices. Integration of essential features such as contact forms, galleries, and social media links, security measures and set up of website hosting.</p>
+                    <p><strong>3. Pricing and Payment Terms</strong><br>Please refer to <a href="https://www.thewebswan.com/pricing--39bf6158-d773-4eaa-aae7-7828c9fdd8db" target="_blank">our pricing page</a>. Our pricing includes everything discussed in the scope of work.</p>
+                    <p><strong>4. Client Responsibilities</strong><br>Provide clear direction, feedback, and content for the website. Review and approve design mockups and website drafts in a timely manner. Collaborate with the designer during the development process.</p>
+                    <p><strong>5. Revisions and Change Requests</strong><br>Two rounds of revisions are included in the design fee. For additional editing after the two rounds the cost is $75/revision/edits.</p>
+                    <p><strong>6. Testing and Quality Assurance</strong><br>Thorough testing of the website across different browsers and devices to ensure compatibility and functionality.</p>
+                    <p><strong>7. Launch and Handover</strong><br>Finalization of website design and functionality. Transfer of website ownership and necessary credentials to the client. Client is responsible to link their domain with a third party.</p>
+                    <p><strong>8. Legal Terms</strong><br>Limitations of liability and warranty disclaimer. Ownership of intellectual property rights upon full payment of design fee.</p>
                     <p><strong>9. Refund and Payment Disclaimer</strong><br>
-                        <ul>
-                            <li>The demo is provided free of charge, with no obligation to pay.</li>
-                            <li>If you do not approve the demo, no payment is required.</li>
-                            <li>If you approve the demo and wishes to proceed, a 50% down payment is required to start the project.</li>
-                            <li>The remaining 50% balance is due once the website work is completed, tested, and fully functional, including all links and buttons. (See Column 6 for more details on testing and completion.)</li>
-                        </ul>
+                        The demo is provided free of charge, with no obligation to pay. If you approve the demo and wish to proceed, a 50% down payment is required to start the project. The remaining 50% balance is due once the website work is completed, tested, and fully functional. No refunds will be issued after all website links are in place and the website is tested. Any changes requested after completion will be charged at $75 per edit.
                     </p>
-                    <p><strong>Refund Policy:</strong><br>
-                        <ul>
-                            <li>No refunds will be issued after all website links are in place and the website is tested.</li>
-                            <li>Partial refunds are considered only if the project is not yet complete, but some links are already in place.</li>
-                        </ul>
-                    </p>
-                    <p><strong>Post-Completion Edits:</strong><br>
-                        Any changes requested after the website is completed and tested will be charged at $75 per edit. (See Paragraph 5 for more details.)</p>
-                    <p><strong>Website Design Service Agreement</strong><br>
-                        Before we finalize our services, please review the following terms regarding the connection of your domain: <strong>Responsibility for Domain Connection:</strong> Once your website is fully designed, tested, and running smoothly on all devices, it becomes your responsibility to connect your domain to the website domain service. <strong>Assistance Available:</strong> Should you require assistance with connecting your domain, our web designer will be happy to provide guidance and support. This assistance is offered at no additional cost. However, please note that while we offer this assistance as a courtesy, we are not responsible for any actions, errors, or issues caused by third party domain providers. <strong>Limitations of Service:</strong> Our primary role is to design and develop your website to your specifications. Once the design is finalized and the website is operational, our service is considered complete. <strong>Additional Assistance:</strong> While our commitment to customer satisfaction extends to helping you connect your domain, please understand that domain connection is facilitated by a third-party. We will make every effort to assist you, but we cannot control or guarantee the actions or troubleshooting of third-party domain providers. We do not collect or sell your information to third parties. Your information is used solely for communication purposes while we work on your project. For more details, please review our Privacy Policy at <a href="https://www.thewebswan.com/privacy-policy" target="_blank">https://www.thewebswan.com/privacy-policy</a></p>
+                    <p><strong>Website Design Service Agreement</strong><br>Once your website is fully designed, tested, and running smoothly, it becomes your responsibility to connect your domain. We do not collect or sell your information to third parties. For more details, please review our <a href="https://www.thewebswan.com/privacy-policy" target="_blank">Privacy Policy</a>.</p>
                 </div>
-                
+
                 <div class="comment-section">
                     <h2>Additional Comments</h2>
                     <div class="comment-container">
@@ -731,24 +244,33 @@
                     </div>
                 </div>
             </main>
+
+            <!-- ✅ CLICK HERE TO SIGN BUTTON — opens signature pad in new window -->
             <div class="signature-section">
-                <a href="https://taniad2169.github.io/Webswan-Signature-Scope-of-Work/" target="_blank" class="btn btn-sign">
-                    <i class="fas fa-pen-fancy"></i> Click Here to Sign
+                <p style="color:#14395d;font-weight:700;font-size:1rem;margin-bottom:1rem;">
+                    Once you have reviewed the scope of work above, click below to open the signature page:
+                </p>
+                <a href="https://taniad2169.github.io/Webswan-Signature-Scope-of-Work/" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="btn-sign">
+                    <i class="fas fa-pen-fancy"></i>
+                    Click Here to Sign
                     <i class="fas fa-arrow-right"></i>
                 </a>
-                
-                <div class="agreement-check" id="agreementCheck">
-                    <input type="checkbox" id="agreeCheckbox">
-                    <p><strong>I acknowledge, understand and agree to the terms and conditions above</strong></p>
-                </div>
-                <div class="signature-controls">
-                    <button type="button" class="btn btn-primary" id="submit-btn">Submit</button>
-                    <button type="button" class="btn btn-success" id="pdf-btn">Generate PDF</button>
+                <p style="font-size:.85rem;color:#888;margin-top:.75rem;">
+                    ✅ Opens in a new window — your form data above is saved
+                </p>
+                <div style="margin-top:1.5rem;">
+                    <button type="button" class="btn btn-success" id="pdf-btn">
+                        <i class="fas fa-file-pdf"></i> Generate PDF of this Form
+                    </button>
                 </div>
             </div>
         </div>
+
         <footer>
-            <p>&copy; 2024 The Web Swan. All rights reserved.</p>
+            <p>&copy; 2026 WebSwan Digital Solutions. All Rights Reserved.</p>
         </footer>
     </div>
 
@@ -762,7 +284,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const projectForm = document.getElementById('project-form');
             const projectType = document.getElementById('project-type');
             const customPriceContainer = document.getElementById('custom-price-container');
             const customPriceInput = document.getElementById('custom-price');
@@ -781,79 +302,38 @@
             const generalComment = document.getElementById('general-comment');
             const miscWordCount = document.getElementById('misc-word-count');
             const generalWordCount = document.getElementById('general-word-count');
-            const agreeCheckbox = document.getElementById('agreeCheckbox');
-            const submitBtn = document.getElementById('submit-btn');
             const pdfBtn = document.getElementById('pdf-btn');
-            const acknowledgmentModal = document.getElementById('acknowledgmentModal');
-            const modalCloseBtn = document.querySelector('.modal-close');
             const saveBtn = document.getElementById('save-btn-data');
-            
             let isManualEntry = false;
-            
+
             function calculateTotal() {
-                if (isManualEntry) {
-                    return;
-                }
-                
+                if (isManualEntry) return;
                 let total = 0;
                 let monthlyTotal = 0;
-                
                 const selectedProjectType = projectType.value;
                 if (selectedProjectType && selectedProjectType !== '') {
-                    if (selectedProjectType === 'discounted' || selectedProjectType === 'specialOffer' || selectedProjectType === 'familydiscount') {
+                    if (['discounted','specialOffer','familydiscount'].includes(selectedProjectType)) {
                         total += parseFloat(customPriceInput.value) || 0;
                     } else {
                         total += parseInt(selectedProjectType) || 0;
                     }
                 }
-
-                addons.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        total += parseInt(checkbox.value) || 0;
-                    }
-                });
-
-                videoAddons.forEach(radio => {
-                    if (radio.checked) {
-                        total += parseInt(radio.value) || 0;
-                    }
-                });
-
+                addons.forEach(cb => { if (cb.checked) total += parseInt(cb.value) || 0; });
+                videoAddons.forEach(r => { if (r.checked) total += parseInt(r.value) || 0; });
                 const repValue = parseInt(reputationManagement.value) || 0;
-                if (repValue > 0) {
-                    monthlyTotal += repValue;
-                }
-
-                advertisingPayments.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        monthlyTotal += parseInt(checkbox.value) || 0;
-                    }
-                });
-
-                setupFees.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        total += parseInt(checkbox.value) || 0;
-                    }
-                });
-
-                monthlyPayments.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        monthlyTotal += parseInt(checkbox.value) || 0;
-                    }
-                });
-
+                if (repValue > 0) monthlyTotal += repValue;
+                advertisingPayments.forEach(cb => { if (cb.checked) monthlyTotal += parseInt(cb.value) || 0; });
+                setupFees.forEach(cb => { if (cb.checked) total += parseInt(cb.value) || 0; });
+                monthlyPayments.forEach(cb => { if (cb.checked) monthlyTotal += parseInt(cb.value) || 0; });
                 totalAmountInput.value = '$' + total;
                 monthlyTotalSpan.textContent = '$' + monthlyTotal;
             }
 
-            function countWords(text) {
-                return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-            }
+            function countWords(text) { return text.trim() === '' ? 0 : text.trim().split(/\s+/).length; }
 
             function updateWordCount(textarea, counter, maxWords) {
                 const wordCount = countWords(textarea.value);
                 counter.textContent = wordCount;
-                
                 if (wordCount > maxWords) {
                     counter.style.color = 'red';
                     const words = textarea.value.trim().split(/\s+/);
@@ -866,94 +346,26 @@
                 }
             }
 
-            function generatePDF() {
-                document.body.classList.add('pdf-mode');
-                
-                const element = document.querySelector('.container');
-                const opt = {
-                    margin: 10,
-                    filename: 'webswan-agreement.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { 
-                        scale: 2,
-                        useCORS: true,
-                        logging: true
-                    },
-                    jsPDF: { 
-                        unit: 'mm', 
-                        format: 'a4', 
-                        orientation: 'portrait' 
-                    }
-                };
-
-                const containers = document.querySelectorAll('.disclaimer-container, .comment-container, textarea');
-                containers.forEach(container => {
-                    container.style.maxHeight = 'none';
-                    container.style.height = 'auto';
-                    container.style.overflow = 'visible';
-                });
-
-                html2pdf().set(opt).from(element).save().then(() => {
-                    document.body.classList.remove('pdf-mode');
-                    
-                    containers.forEach(container => {
-                        container.style.maxHeight = '';
-                        container.style.height = '';
-                        container.style.overflow = '';
-                    });
-                });
-            }
-
             projectType.addEventListener('change', function() {
-                if (this.value === 'discounted' || this.value === 'specialOffer' || this.value === 'familydiscount') {
-                    customPriceContainer.style.display = 'block';
-                } else {
-                    customPriceContainer.style.display = 'none';
-                    customPriceInput.value = '';
-                }
+                customPriceContainer.style.display = ['discounted','specialOffer','familydiscount'].includes(this.value) ? 'block' : 'none';
                 calculateTotal();
             });
 
             customPriceInput.addEventListener('input', calculateTotal);
-            
-            addons.forEach(checkbox => {
-                checkbox.addEventListener('change', calculateTotal);
-            });
-            
-            videoAddons.forEach(radio => {
-                radio.addEventListener('change', calculateTotal);
-            });
-            
+            addons.forEach(cb => cb.addEventListener('change', calculateTotal));
+            videoAddons.forEach(r => r.addEventListener('change', calculateTotal));
             reputationManagement.addEventListener('change', calculateTotal);
-            
-            advertisingPayments.forEach(checkbox => {
-                checkbox.addEventListener('change', calculateTotal);
-            });
-            
-            setupFees.forEach(checkbox => {
-                checkbox.addEventListener('change', calculateTotal);
-            });
-            
-            monthlyPayments.forEach(checkbox => {
-                checkbox.addEventListener('change', calculateTotal);
-            });
-            
+            advertisingPayments.forEach(cb => cb.addEventListener('change', calculateTotal));
+            setupFees.forEach(cb => cb.addEventListener('change', calculateTotal));
+            monthlyPayments.forEach(cb => cb.addEventListener('change', calculateTotal));
+
             miscellaneousCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    miscellaneousCommentContainer.style.display = 'block';
-                } else {
-                    miscellaneousCommentContainer.style.display = 'none';
-                }
+                miscellaneousCommentContainer.style.display = this.checked ? 'block' : 'none';
             });
-            
-            miscellaneousComment.addEventListener('input', function() {
-                updateWordCount(this, miscWordCount, 1000);
-            });
-            
-            generalComment.addEventListener('input', function() {
-                updateWordCount(this, generalWordCount, 1000);
-            });
-            
+
+            miscellaneousComment.addEventListener('input', function() { updateWordCount(this, miscWordCount, 1000); });
+            generalComment.addEventListener('input', function() { updateWordCount(this, generalWordCount, 1000); });
+
             otherCheckbox.addEventListener('change', function() {
                 if (this.checked) {
                     totalAmountInput.removeAttribute('readonly');
@@ -966,56 +378,23 @@
                 }
             });
 
-            totalAmountInput.addEventListener('input', function() {
-                isManualEntry = true;
-                otherCheckbox.checked = true;
-            });
-            
-            totalAmountInput.addEventListener('blur', function() {
-                isManualEntry = false;
-            });
-            
-            submitBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                if (!projectForm.checkValidity()) {
-                    alert("Please fill out all required fields.");
-                    return;
-                }
-
-                if (!agreeCheckbox.checked) {
-                    acknowledgmentModal.style.display = 'flex';
-                    return;
-                }
-
-                alert('Form submitted successfully!');
-                projectForm.reset();
-                agreeCheckbox.checked = false;
-                miscellaneousCheckbox.checked = false;
-                miscellaneousCommentContainer.style.display = 'none';
-                otherCheckbox.checked = false;
-                customPriceContainer.style.display = 'none';
-                miscWordCount.textContent = '0';
-                generalWordCount.textContent = '0';
-                calculateTotal();
+            pdfBtn.addEventListener('click', function() {
+                const element = document.querySelector('.container');
+                const opt = {
+                    margin: 10,
+                    filename: 'webswan-scope-of-work.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                const containers = document.querySelectorAll('.disclaimer-container, .comment-container, textarea');
+                containers.forEach(c => { c.style.maxHeight = 'none'; c.style.height = 'auto'; c.style.overflow = 'visible'; });
+                html2pdf().set(opt).from(element).save().then(() => {
+                    containers.forEach(c => { c.style.maxHeight = ''; c.style.height = ''; c.style.overflow = ''; });
+                });
             });
 
-            pdfBtn.addEventListener('click', generatePDF);
-
-            modalCloseBtn.addEventListener('click', function() {
-                acknowledgmentModal.style.display = 'none';
-            });
-
-            window.addEventListener('click', function(event) {
-                if (event.target == acknowledgmentModal) {
-                    acknowledgmentModal.style.display = 'none';
-                }
-            });
-            
-            saveBtn.addEventListener('click', function() {
-                alert('Data saved!');
-            });
-
+            saveBtn.addEventListener('click', function() { alert('Data saved!'); });
             calculateTotal();
         });
     </script>
